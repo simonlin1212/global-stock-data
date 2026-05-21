@@ -368,7 +368,7 @@ def stock_quote_eastmoney(ticker_or_code: str, secid_prefix: int = 105) -> dict:
         "secid": f"{secid_prefix}.{ticker_or_code}",
         "fields": "f43,f44,f45,f46,f47,f48,f55,f57,f58,f59,f60,f170",
     }
-    r = requests.get(url, timeout=10)
+    r = requests.get(url, params=params, timeout=10)
     d = r.json().get("data")
     if not d:
         return {}
@@ -451,7 +451,7 @@ def stock_kline_yahoo(symbol: str, interval: str = "1d",
     """
     url = f"https://query2.finance.yahoo.com/v8/finance/chart/{symbol}"
     params = {"interval": interval, "range": range_}
-    r = requests.get(url, headers={
+    r = requests.get(url, params=params, headers={
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
     }, timeout=15)
     r.raise_for_status()
@@ -1008,7 +1008,7 @@ def fund_flow_daily(ticker_or_code: str, secid_prefix: int = 105,
         "fields2": "f51,f52,f53,f54,f55,f56,f57",
         "lmt": limit,
     }
-    r = requests.get(url, timeout=15)
+    r = requests.get(url, params=params, timeout=15)
     d = r.json()
     data = d.get("data")
     if not data or not data.get("klines"):
@@ -1245,7 +1245,7 @@ def stock_search(keyword: str, count: int = 10) -> list[dict]:
         "token": "D43BF722C8E33BDC906FB84D85E326E8",
         "count": count,
     }
-    r = requests.get(url, timeout=10)
+    r = requests.get(url, params=params, timeout=10)
     d = r.json()
     
     suggestions = d.get("QuotationCodeTable", {}).get("Data", [])
@@ -1364,7 +1364,7 @@ def market_stock_list(market: str = "us_nasdaq", sort_field: str = "f3",
         "fid": sort_field,
         "po": 1 if sort_desc else 0,
     }
-    r = requests.get(url, timeout=15)
+    r = requests.get(url, params=params, timeout=15)
     d = r.json()
     data = d.get("data", {})
     
