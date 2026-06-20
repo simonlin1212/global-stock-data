@@ -2,14 +2,14 @@
 name: global-stock-data
 description: 美股港股全栈数据工具包 — 覆盖行情(新浪+腾讯+东财push2)、K线(新浪+Yahoo)、技术指标(MA/MACD/RSI/KDJ/布林带)、基本面(东财datacenter三表+GMAININDICATOR+Yahoo quoteSummary+SEC XBRL)、资金面(东财push2his日级资金流)、期权(Yahoo)、SEC Filing(EDGAR)、搜索与工具(东财search+Yahoo+SEC CIK+全市场列表)八层数据源，内嵌全部调用代码，自包含零依赖外部文件。适用于美股港股个股分析、全市场筛选、财报解读、期权策略、SEC文件检索、资金流追踪、机构持仓分析等场景。
 origin: custom
-version: 1.0
+version: 1.0.1
 ---
 
 > 📦 项目主页：https://github.com/simonlin1212/global-stock-data — 更新、反馈、支持作者
 > 
 > 作者：Simon 林 · 抖音「Simon林」· 公众号「硅基世纪」
 
-# 美股港股全栈数据工具包 V1.0
+# 美股港股全栈数据工具包 V1.0.1
 
 八层数据架构，18 个端点，5 个数据源，全部零鉴权，实测可用（2026-05-20 验证）。
 
@@ -1370,6 +1370,10 @@ def market_stock_list(market: str = "us_nasdaq", sort_field: str = "f3",
     
     total = data.get("total", 0)
     diff = data.get("diff", [])
+    # 东财 push2 的 diff 有时是 list、有时是按序号为键的 dict（如 {"0":{...},"1":{...}}）。
+    # 直接 for item in diff 遇到 dict 会拿到字符串键 → AttributeError，统一成列表。
+    if isinstance(diff, dict):
+        diff = list(diff.values())
     
     stocks = []
     for item in diff:

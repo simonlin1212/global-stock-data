@@ -4,6 +4,8 @@
 
 一个自包含的 Skill 文件，把分散在 5 个数据源里的美股/港股原始数据整合成 AI 编程助手直接能用的工具集。你不用再背东财 secid 前缀、Yahoo crumb 鉴权流程、SEC EDGAR 的 CIK 映射——全部封装好了。
 
+> **V1.0.1 修复（2026-06-20 · PR #1）：** 5 个函数（个股行情/Yahoo K线/日级资金流/搜索/全市场列表）漏传 `params=params`，请求实际是裸 URL，**此前始终返回空数据** → 一次性补齐；并修了 `market_stock_list` 在东财 `diff` 返回 dict 时 `AttributeError` 的连带 bug（归一化 dict→list）。强烈建议升级。致谢 @APTX4869-maker。
+
 > 兼容 [Claude Code](https://github.com/anthropics/claude-code) · [Codex](https://github.com/openai/codex) · [OpenClaw](https://github.com/anthropics/openclaw)
 >
 > Skill 文件本质是结构化 Markdown + 内嵌 Python，任何支持上下文注入的 AI 编程助手都能用。
@@ -13,7 +15,7 @@
 ## 架构
 
 ```
-美股港股全栈数据 · 八层架构 · V1.0
+美股港股全栈数据 · 八层架构 · V1.0.1
 │
 ├── 行情层      新浪(gb_/rt_hk) + 腾讯(us/r_hk) + 东财push2        实时报价 25-78 字段
 ├── K线层      新浪(回溯至1984) + Yahoo chart                       日/周/月/分钟 K线
@@ -264,6 +266,8 @@ Full-stack data toolkit for US & HK stock markets — 8-layer architecture · 18
 
 A self-contained Skill file that consolidates raw US/HK stock data from 5 sources into a ready-to-use toolkit for AI coding assistants. No need to memorize Eastmoney secid prefixes, Yahoo crumb authentication flows, or SEC EDGAR CIK mappings — it's all handled.
 
+> **V1.0.1 Fix (2026-06-20 · PR #1):** 5 functions (quote / Yahoo kline / daily fund flow / search / market list) were missing `params=params`, so requests hit a bare URL and **always returned empty data** → fixed all 5; also fixed a follow-on `AttributeError` in `market_stock_list` when Eastmoney's `diff` comes back as a dict (normalized dict→list). Upgrade strongly recommended. Thanks to @APTX4869-maker.
+
 > Compatible with [Claude Code](https://github.com/anthropics/claude-code) · [Codex](https://github.com/openai/codex) · [OpenClaw](https://github.com/anthropics/openclaw)
 >
 > The Skill file is structured Markdown + embedded Python. Any AI coding assistant with context injection can use it.
@@ -273,7 +277,7 @@ A self-contained Skill file that consolidates raw US/HK stock data from 5 source
 ## Architecture
 
 ```
-US & HK Stock Full-Stack Data · 8-Layer Architecture · V1.0
+US & HK Stock Full-Stack Data · 8-Layer Architecture · V1.0.1
 │
 ├── Market Data       Sina(gb_/rt_hk) + Tencent(us/r_hk) + Eastmoney push2     Real-time quotes 25-78 fields
 ├── K-line            Sina(back to 1984) + Yahoo chart                          Daily/Weekly/Monthly/Minute

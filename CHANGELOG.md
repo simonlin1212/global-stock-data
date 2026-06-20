@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.0.1 — 2026-06-20
+
+### 修复（PR #1 @APTX4869-maker + 连带 bug）
+- **5 个函数漏传 `params` 导致始终拿不到数据（PR #1）**：`stock_quote_eastmoney` / `stock_kline_yahoo` / `fund_flow_daily` / `stock_search` / `market_stock_list` 都构造了 `params` dict，但 `requests.get(url, ...)` 时漏了 `params=params`，请求实际是裸 URL → 服务端返回空（东财 push2 返回 `rc:102`/`data:null`）。一次性补齐 5 处。**实测确认**：漏传时 `data=None`，补齐后 `market_stock_list` 返回 `total=5990`。致谢 @APTX4869-maker 的排查与验证。
+- **连带 bug：`market_stock_list` 在 `diff` 为 dict 时崩溃（本次一并修）**：补齐 params 后该函数能拿到响应，但东财 push2 的 `diff` 字段**有时是 list、有时是按序号为键的 dict**（如 `{"0":{...},"1":{...}}`）。旧代码 `for item in diff` 遇 dict 会拿到字符串键 → `AttributeError: 'str' object has no attribute 'get'`。新增 `if isinstance(diff, dict): diff = list(diff.values())` 归一化。**实测确认**：当前返回的 `diff` 正是 dict 结构，归一化后正常遍历。
+
+### 说明
+- 八层架构 / 18 端点 / 5 数据源不变；纯 bug 修复补丁。这 5 个端点此前**始终返回空数据**，升级强烈建议。
+
 ## v1.0 — 2026-05-20
 
 ### 首次开源发布
