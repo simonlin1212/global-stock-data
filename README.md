@@ -38,6 +38,14 @@ A single self-contained Skill file that turns raw US stock data — scattered ac
 
 ---
 
+## Open to Opportunities｜作者寻找工作机会
+
+作者目前关注腾讯等大型科技企业在深圳的 AI 相关岗位，希望加入一支热爱 AI 开发的团队，继续从事 AI / Agent 产品开发、应用落地及 AI 咨询工作。
+
+联系：[simonlin0423@gmail.com](mailto:simonlin0423@gmail.com)
+
+---
+
 ## Architecture
 
 ```
