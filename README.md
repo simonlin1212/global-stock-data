@@ -38,11 +38,11 @@ A single self-contained Skill file that turns raw US stock data — scattered ac
 
 ---
 
-## Open to Opportunities｜作者寻找工作机会
+## The Author Is Open to Opportunities
 
-作者目前关注腾讯等大型科技企业在深圳的 AI 相关岗位，希望加入一支热爱 AI 开发的团队，继续从事 AI / Agent 产品开发、应用落地及 AI 咨询工作。
+The author is open to AI roles at Tencent and other leading technology companies in Shenzhen, and hopes to join a team passionate about AI development. Areas of interest include AI / Agent product development, real-world deployment, and AI consulting.
 
-联系：[simonlin0423@gmail.com](mailto:simonlin0423@gmail.com)
+Contact: [simonlin0423@gmail.com](mailto:simonlin0423@gmail.com)
 
 ---
 
