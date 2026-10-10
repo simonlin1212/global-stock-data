@@ -69,12 +69,17 @@ US Full-Stack Data · 13-layer architecture · V2.0
 
 Source terms differ a lot. **"Official" does not mean "free to use".** These tiers come from reading each source's actual terms of service on 2026-07-24. Quotes are verbatim.
 
-| Tier | Commercial | Redistribute | Sources | Basis (quoted) |
-|---|---|---|---|---|
-| **S** | ✅ | ✅ | SEC EDGAR / Treasury / CFTC | EDGAR: *"Anyone can access and download this information **for free**"*, *"We **allow scripted access**"*. Hard limit **10 req/s**, User-Agent required |
-| **B** | ⚠️ verify first | ❌ | FINRA | Files are published for download, but terms prohibit *"data mining, scraping or harvesting tools (including robots)"* and state *"**non-commercial use**"* |
-| **C** | ❌ needs permission | ❌ | CBOE / Nasdaq / Yahoo / Eastmoney / Sina / Tencent | CBOE requires *"**approval in advance**"* + *"**execution of a license agreement**"*; Yahoo states **personal use only** |
-| **⛔ Excluded** | — | — | HKEX (CCASS) | Terms prohibit *"any '**robot**', '**bot**', '**spider**', '**scraper**'..."* and apply *"**whether or not for gain**"* → **this tool ships no scraper for it** |
+<table>
+<thead>
+<tr><th nowrap>Tier</th><th nowrap>Commercial</th><th nowrap>Redistribute</th><th>Sources</th><th>Basis (quoted)</th></tr>
+</thead>
+<tbody>
+<tr><td nowrap><strong>S</strong></td><td nowrap>✅</td><td nowrap>✅</td><td>SEC EDGAR / Treasury / CFTC</td><td>EDGAR: <em>&quot;Anyone can access and download this information <strong>for free</strong>&quot;</em>, <em>&quot;We <strong>allow scripted access</strong>&quot;</em>. Hard limit <strong>10 req/s</strong>, User-Agent required</td></tr>
+<tr><td nowrap><strong>B</strong></td><td nowrap>⚠️ verify first</td><td nowrap>❌</td><td>FINRA</td><td>Files are published for download, but terms prohibit <em>&quot;data mining, scraping or harvesting tools (including robots)&quot;</em> and state <em>&quot;<strong>non-commercial use</strong>&quot;</em></td></tr>
+<tr><td nowrap><strong>C</strong></td><td nowrap>❌ needs permission</td><td nowrap>❌</td><td>CBOE / Nasdaq / Yahoo / Eastmoney / Sina / Tencent</td><td>CBOE requires <em>&quot;<strong>approval in advance</strong>&quot;</em> + <em>&quot;<strong>execution of a license agreement</strong>&quot;</em>; Yahoo states <strong>personal use only</strong></td></tr>
+<tr><td nowrap><strong>⛔ Excluded</strong></td><td nowrap>—</td><td nowrap>—</td><td>HKEX (CCASS)</td><td>Terms prohibit <em>&quot;any '<strong>robot</strong>', '<strong>bot</strong>', '<strong>spider</strong>', '<strong>scraper</strong>'...&quot;</em> and apply <em>&quot;<strong>whether or not for gain</strong>&quot;</em> → <strong>this tool ships no scraper for it</strong></td></tr>
+</tbody>
+</table>
 
 A working HKEX shareholding layer was built, then removed. Shipping code that violates a source's terms would defeat the point of grading sources in the first place. **This project distributes code, not data.** For commercial use, rely only on tier S.
 

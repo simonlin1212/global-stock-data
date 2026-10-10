@@ -67,12 +67,17 @@
 
 各源条款差异极大，**"官方"不等于"可自由使用"**。以下结论来自 2026-07-24 逐家实读条款原文，引号内为原文：
 
-| 级别 | 可商用 | 可再分发 | 源 | 依据（原文摘录） |
-|---|---|---|---|---|
-| **S** | ✅ | ✅ | SEC EDGAR / Treasury / CFTC | EDGAR 明示 *"for free"*、*"allow scripted access"*；**硬上限 10 请求/秒**，须声明 User-Agent |
-| **B** | ⚠️自行确认 | ❌ | FINRA | 数据文件主动发布；但条款禁止 *"data mining, scraping or harvesting tools"*，并声明 *"non-commercial use"* |
-| **C** | ❌需授权 | ❌ | CBOE / Nasdaq / Yahoo / 东财 / 新浪 / 腾讯 | Cboe 要求 *"approval in advance"* + *"license agreement"*；Yahoo 写明 personal use only |
-| **⛔ 已排除** | — | — | HKEX (CCASS) | 条款明文禁止 robot/bot/spider/scraper，且适用于"不论是否营利" → **本工具不提供该抓取代码** |
+<table>
+<thead>
+<tr><th nowrap>级别</th><th nowrap>可商用</th><th nowrap>可再分发</th><th>源</th><th>依据（原文摘录）</th></tr>
+</thead>
+<tbody>
+<tr><td nowrap><strong>S</strong></td><td nowrap>✅</td><td nowrap>✅</td><td>SEC EDGAR / Treasury / CFTC</td><td>EDGAR 明示 <em>&quot;for free&quot;</em>、<em>&quot;allow scripted access&quot;</em>；<strong>硬上限 10 请求/秒</strong>，须声明 User-Agent</td></tr>
+<tr><td nowrap><strong>B</strong></td><td nowrap>⚠️自行确认</td><td nowrap>❌</td><td>FINRA</td><td>数据文件主动发布；但条款禁止 <em>&quot;data mining, scraping or harvesting tools&quot;</em>，并声明 <em>&quot;non-commercial use&quot;</em></td></tr>
+<tr><td nowrap><strong>C</strong></td><td nowrap>❌需授权</td><td nowrap>❌</td><td>CBOE / Nasdaq / Yahoo / 东财 / 新浪 / 腾讯</td><td>Cboe 要求 <em>&quot;approval in advance&quot;</em> + <em>&quot;license agreement&quot;</em>；Yahoo 写明 personal use only</td></tr>
+<tr><td nowrap><strong>⛔ 已排除</strong></td><td nowrap>—</td><td nowrap>—</td><td>HKEX (CCASS)</td><td>条款明文禁止 robot/bot/spider/scraper，且适用于&quot;不论是否营利&quot; → <strong>本工具不提供该抓取代码</strong></td></tr>
+</tbody>
+</table>
 
 一个已跑通的 HKEX 席位持股层被删掉了——发布违反条款的抓取代码，会让"给数据源分级"这件事本身失去意义。**本工具只分发代码，不分发数据。** 商用请只依赖 S 级源。
 
@@ -192,18 +197,23 @@ pip install requests
 
 ## 数据源
 
-| 数据源 | 级别 | 鉴权 | 覆盖 |
-|--------|------|------|------|
-| **SEC EDGAR** | **S** | 需真实UA | 美股 Filing / XBRL / **申报流** / **全文检索** / **全市场横截面** |
-| **US Treasury** | **S** | 无 | **收益率曲线（1M~30Y）** |
-| **CFTC** | **S** | 无 | **COT 持仓报告** |
-| **FINRA** | **B** | 无 | 美股 **全市场每日空头成交量**（商用需自行确认） |
-| **CBOE** | **C** | 无 | 美股 **期权 + 希腊字母 + IV + 0DTE**（使用需 Cboe 事先授权） |
-| **Nasdaq** | **C** | 无 | 美股 **财报日历**（条款未核实） |
-| 东财（push2 / push2his / datacenter / search） | C | 无 | 美股+港股 行情 / 资金流 / 三表 / 搜索 |
-| Yahoo Finance | C | cookie+crumb（自动） | 美股+港股 全品类（**personal use only**） |
-| 新浪 | C | 无 | 美股+港股 行情、美股K线 |
-| 腾讯 | C | 无 | 美股+港股 行情 |
+<table>
+<thead>
+<tr><th>数据源</th><th nowrap>级别</th><th nowrap>鉴权</th><th>覆盖</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>SEC EDGAR</strong></td><td nowrap><strong>S</strong></td><td nowrap>需真实UA</td><td>美股 Filing / XBRL / <strong>申报流</strong> / <strong>全文检索</strong> / <strong>全市场横截面</strong></td></tr>
+<tr><td><strong>US Treasury</strong></td><td nowrap><strong>S</strong></td><td nowrap>无</td><td><strong>收益率曲线（1M~30Y）</strong></td></tr>
+<tr><td><strong>CFTC</strong></td><td nowrap><strong>S</strong></td><td nowrap>无</td><td><strong>COT 持仓报告</strong></td></tr>
+<tr><td><strong>FINRA</strong></td><td nowrap><strong>B</strong></td><td nowrap>无</td><td>美股 <strong>全市场每日空头成交量</strong>（商用需自行确认）</td></tr>
+<tr><td><strong>CBOE</strong></td><td nowrap><strong>C</strong></td><td nowrap>无</td><td>美股 <strong>期权 + 希腊字母 + IV + 0DTE</strong>（使用需 Cboe 事先授权）</td></tr>
+<tr><td><strong>Nasdaq</strong></td><td nowrap><strong>C</strong></td><td nowrap>无</td><td>美股 <strong>财报日历</strong>（条款未核实）</td></tr>
+<tr><td>东财（push2 / push2his / datacenter / search）</td><td nowrap>C</td><td nowrap>无</td><td>美股+港股 行情 / 资金流 / 三表 / 搜索</td></tr>
+<tr><td>Yahoo Finance</td><td nowrap>C</td><td nowrap>cookie+crumb（自动）</td><td>美股+港股 全品类（<strong>personal use only</strong>）</td></tr>
+<tr><td>新浪</td><td nowrap>C</td><td nowrap>无</td><td>美股+港股 行情、美股K线</td></tr>
+<tr><td>腾讯</td><td nowrap>C</td><td nowrap>无</td><td>美股+港股 行情</td></tr>
+</tbody>
+</table>
 
 **级别含义**：**S** = 政府数据，可商用可再分发 · **B** = 主动公开的数据文件，商用需自行确认 · **C** = 需事先授权或条款未核实，仅个人研究。依据原文见 [合规分级](#合规分级)。所有请求走直连 HTTP，内置线程安全限流器（SEC 按官方 10 req/s 硬上限设为 8 req/s）。
 
