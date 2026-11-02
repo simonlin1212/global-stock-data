@@ -1,21 +1,21 @@
 ---
 name: global-stock-data
-description: 美股港股全栈数据工具包（官方源优先）— 十六层架构·50+端点·17数据源·全部零鉴权。在原有行情/K线/技术指标(MA/MACD/RSI/KDJ/布林带)/基本面/资金面/期权/SEC Filing/工具八层之上，新增：CBOE官方期权链(完整希腊字母+IV+0DTE流+异动识别)、FINRA全市场每日空头成交量、SEC EDGAR申报事件流(Form4内部人/8-K/13F机构持仓)、EDGAR全市场横截面筛选、美债收益率曲线/CFTC COT/财报日历；V2.1 新增全球利率汇率层(BIS 38家央行政策利率、欧洲央行汇率/利率/欧元区收益率曲线、纽约联储SOFR/EFFR、美联储H.10汇率/H.6货币存量、美国财政部国债拍卖/联邦债务)，Yahoo K线修复全历史日线与时区并支持日本/台湾/韩国/印度/欧洲等市场代码；V2.2 新增CBOE波动率指数历史与VIX期限结构、FINRA做空余额(每月两期)、SEC Form 4内部人逐笔交易与13F机构持仓解析、台股官方OpenAPI(证交所+柜买中心,可商用)、美国能源信息署EIA原油/天然气价格与库存。每个数据源标注合规级别与条款原文。内嵌全部调用代码，自包含零依赖外部文件。适用于美股港股个股分析、全市场筛选、财报解读、期权与0DTE策略、做空数据追踪、内部人交易与13F持仓、SEC文件检索、资金流与机构持仓分析、全球利率汇率与央行政策跟踪、VIX波动率、台股、原油天然气等场景。
+description: 美股港股全栈数据工具包（官方源优先）— 十七层架构·50+端点·18数据源·全部零鉴权。在原有行情/K线/技术指标(MA/MACD/RSI/KDJ/布林带)/基本面/资金面/期权/SEC Filing/工具八层之上，新增：CBOE官方期权链(完整希腊字母+IV+0DTE流+异动识别)、FINRA全市场每日空头成交量、SEC EDGAR申报事件流(Form4内部人/8-K/13F机构持仓)、EDGAR全市场横截面筛选、美债收益率曲线/CFTC COT/财报日历；V2.1 新增全球利率汇率层(BIS 38家央行政策利率、欧洲央行汇率/利率/欧元区收益率曲线、纽约联储SOFR/EFFR、美联储H.10汇率/H.6货币存量、美国财政部国债拍卖/联邦债务)，Yahoo K线修复全历史日线与时区并支持日本/台湾/韩国/印度/欧洲等市场代码；V2.2 新增CBOE波动率指数历史与VIX期限结构、FINRA做空余额(每月两期)、SEC Form 4内部人逐笔交易与13F机构持仓解析、台股官方OpenAPI(证交所+柜买中心,可商用)、美国能源信息署EIA原油/天然气价格与库存；V2.3 新增美国宏观层(美国劳工统计局BLS公共API免注册:CPI/核心CPI/非农/失业率/时薪/PPI/JOLTS职位空缺/进口价格/ECI/生产率,附官方发布日程与修订规则,劳工部每周初请/续请失业金)。每个数据源标注合规级别与条款原文。内嵌全部调用代码，自包含零依赖外部文件。适用于美股港股个股分析、全市场筛选、财报解读、期权与0DTE策略、做空数据追踪、内部人交易与13F持仓、SEC文件检索、资金流与机构持仓分析、全球利率汇率与央行政策跟踪、VIX波动率、台股、原油天然气、美国CPI/非农/失业金等宏观数据与发布日程等场景。
 origin: custom
-version: 2.2.0
+version: 2.3.0
 ---
 
 > 📦 项目主页：https://github.com/simonlin1212/global-stock-data — 更新、反馈、支持作者
 > 
 > 作者：Simon 林 · X [@linsizhen](https://x.com/linsizhen) · 邮箱：simonlin0423@gmail.com
 
-# 美股港股全栈数据工具包 V2.2 — 官方源优先
+# 美股港股全栈数据工具包 V2.3 — 官方源优先
 
-十六层数据架构，50+ 个端点，17 个数据源，全部零鉴权，实测可用（2026-07-24 全量回归验证；V2.1 新增与修复部分 2026-10-11 实测；V2.2 新增部分 2026-10-12 实测）。层数按「原有八层 + V2.0 五层（CBOE 期权链单算一层）+ V2.1 一层 + V2.2 两层（台股、能源）」计；V2.2 的波动率指数、做空余额、Form 4 / 13F 解析是原有层里的新小节，不另计层。
+十七层数据架构，50+ 个端点，18 个数据源，全部零鉴权，实测可用（2026-07-24 全量回归验证；V2.1 新增与修复部分 2026-10-11 实测；V2.2 新增部分 2026-10-12 实测；V2.3 新增部分 2026-11-02 实测）。层数按「原有八层 + V2.0 五层（CBOE 期权链单算一层）+ V2.1 一层 + V2.2 两层（台股、能源）+ V2.3 一层（美国宏观）」计；V2.2 的波动率指数、做空余额、Form 4 / 13F 解析是原有层里的新小节，不另计层。
 
 **V2.0 设计原则：官方源优先。** 新增层的主力数据取自美国政府（SEC EDGAR / Treasury / CFTC）、
 自律组织（FINRA）与交易所（CBOE / Nasdaq）的公开端点；V2.1 再加国际清算银行、欧洲央行、
-美联储、纽约联储四家官方机构；V2.2 再加台湾证交所、柜买中心与美国能源信息署 EIA。**每个数据源都标注了合规级别与条款原文**
+美联储、纽约联储四家官方机构；V2.2 再加台湾证交所、柜买中心与美国能源信息署 EIA；V2.3 再加美国劳工部（劳工统计局 BLS + 每周失业金申领）。**每个数据源都标注了合规级别与条款原文**
 （见下方「数据源合规分级」）——"官方"不等于"可自由使用"，各源差异极大。
 
 **本工具只分发代码，不分发、不转售任何市场数据**；数据由使用者自行按各源条款获取。
@@ -102,6 +102,13 @@ SEC Filing层（仅美股）
 
 能源 ⭐
 └── EIA → 原油/天然气每周库存 [S级] + WTI(1986起)/布伦特/Henry Hub 现货日价 [B级·转载 Refinitiv]
+
+━━━ 以下为 V2.3 新增 ━━━
+
+美国宏观 ⭐
+├── 劳工统计局 BLS → CPI/核心CPI/非农/失业率/时薪/PPI/JOLTS/进口价格/ECI/生产率 + 任意序列号  [S级·注明来源与取数日期]
+├── 劳工统计局 BLS → 官方发布日程(每次发布的日期和美东时间)                                 [S级]
+└── 劳工部 ETA     → 每周初请/续请失业金(1967起)                                             [S级]
 ```
 
 ---
@@ -136,8 +143,11 @@ SEC Filing层（仅美股）
 | **台股最新行情 / 本益比 / 月营收 / 融资融券** | **Layer 14** | **证交所 / 柜买中心** ⭐ | **S** |
 | **原油 / 天然气每周库存** | **Layer 15** | **EIA** ⭐ | **S** |
 | **原油 / 天然气现货日价** | **Layer 15** | **EIA（转载 Refinitiv）** ⭐ | B |
+| **美国 CPI / 非农 / 失业率 / PPI / JOLTS 等宏观数据** | **Layer 16.1–16.2** | **劳工统计局 BLS** ⭐ | **S** |
+| **CPI、非农等下次什么时候发布** | **Layer 16.3** | **劳工统计局 BLS** ⭐ | **S** |
+| **每周初请 / 续请失业金** | **Layer 16.4** | **劳工部 ETA** ⭐ | **S** |
 
-⭐ = V2.0 / V2.1 / V2.2 新增，且为 yfinance 与多数开源方案不具备的能力。
+⭐ = V2.0 / V2.1 / V2.2 / V2.3 新增，且为 yfinance 与多数开源方案不具备的能力。
 
 ---
 
@@ -145,7 +155,7 @@ SEC Filing层（仅美股）
 
 > 下表结论来自 **逐家实读各源条款原文**（2026-07-24；V2.1 于 2026-10-11 复核 Yahoo / Nasdaq，
 > 并新读 BIS / ECB / 美联储理事会 / 纽约联储 4 家新增官方源；V2.2 于 2026-10-12 新读台湾证交所 / 柜买中心
-> 使用条款、台湾《政府资料开放授权条款》与 EIA），除标明「本工具的判断」处外都不是推断。引号内为原文。
+> 使用条款、台湾《政府资料开放授权条款》与 EIA；V2.3 于 2026-11-02 新读美国劳工统计局 BLS 版权页与 API 使用条款、劳工部版权页），除标明「本工具的判断」处外都不是推断。引号内为原文。
 > **各源差异极大，"官方"不等于"可自由使用"。**
 
 ### S 级 — 可自由使用（含商用与再分发；部分要求注明来源）
@@ -160,6 +170,8 @@ SEC Filing层（仅美股）
 | **欧洲央行 ECB** | *"All publicly available ESCB statistics may be **reused free of charge** on the condition that the source is quoted (e.g. "Source: ECB statistics.") and that the statistics (including metadata) are **not modified**."* |
 | **美国能源信息署 EIA**（库存等 EIA 自己的数据） | *"U.S. government publications are in the **public domain** and are not subject to copyright protection."* 转载时应注明来源与发布日期，如 *"Source: U.S. Energy Information Administration (Oct 2008)."* ⚠️ EIA 网站上转载的第三方数据不在此列，见 B 级的 EIA 现货价格 |
 | **台湾证交所 / 柜买中心 OpenAPI** | **授权**：本工具用到的 13 个数据集都登记在台湾「政府资料开放平台」，授权方式为《政府资料开放授权条款-第1版》：*「授權使用者不限目的、時間及地域、非專屬、不可撤回、免授權金進行利用」*，但须按条款的「显名声明」**注明来源**，否则视为未取得授权。两家网站条款的知识产权一节写明，经授权给政府资料开放平台的资料 *「不在此限」*，同时要求转载 *「清楚註明資料來源，並確保資料完整性，不得任意增刪」*。**程序下载**：网站条款禁止 *「非依（交易所）同意之方式」* 用自动程序下载；两家的 OpenAPI 说明页都写 *「歡迎各位介接使用」*，证交所的还直接链接上述授权条款——官方开放的程序接口即为其同意的方式（本工具的理解）。⚠️ 柜买中心的 OpenAPI 页没有链接授权条款，平台上登记的多是同一份数据的网页下载地址，归 S 级是**本工具的判断**。两家网页上逐股查历史的接口不在此列，本工具不用 |
+| **美国劳工统计局 BLS** | 版权页（Last Modified August 5, 2016）：*"everything that we publish, both in hard copy and electronically, is in the **public domain**, except for previously copyrighted photographs and illustrations. You are free to use our public domain material without specific permission, although we do ask that you **cite the Bureau of Labor Statistics** as the source."* API 使用条款（Last Modified August 30, 2023）另要求：*"Users of the public API should **cite the date** that data were accessed or retrieved using the API. Users must clearly state that “BLS.gov cannot vouch for the data or analyses derived from these data after the data have been retrieved from BLS.gov.”"*，*"Users may not modify or falsely represent content accessed through BLS.gov and still cite the source as BLS.gov."*，BLS 徽标不得使用。**硬性限制**：免 key 版每天 25 次请求、每次 25 个序列、10 年；*"If BLS reasonably believes that a user has attempted to exceed or circumvent these limits, that user's access to the API may be permanently or temporarily blocked."* 网站使用政策：*"BLS also reserves the right to block robots that do not contain information that can be used to contact the owner."*（实测不带邮箱的 User-Agent 一律 403，本工具用 `SEC_CONTACT`） |
+| **美国劳工部 ETA**（每周失业金申领） | 劳工部版权页：*"Materials created by the federal government are generally part of the **public domain** and may be used, reproduced and distributed without permission."* 不得以暗示与劳工部有关联或受其认可的方式使用；可注明来源 *"U.S. Department of Labor and/or https://www.dol.gov"* |
 
 ### B 级 — 数据文件系主动公开，但站点条款含限制
 
@@ -195,9 +207,9 @@ SEC Filing层（仅美股）
 
 ### 给使用者的三条硬规则
 
-1. **商业用途**：只依赖 **S 级**（SEC EDGAR / Treasury / CFTC / 美联储 / 纽约联储 / BIS / ECB / EIA 库存 / 台湾证交所 / 柜买中心），并按各源要求注明来源。B 级需自行确认，C 级须先取得授权，D 级不得商用。
+1. **商业用途**：只依赖 **S 级**（SEC EDGAR / Treasury / CFTC / 美联储 / 纽约联储 / BIS / ECB / EIA 库存 / 台湾证交所 / 柜买中心 / 美国劳工部 BLS 与 ETA），并按各源要求注明来源。B 级需自行确认，C 级须先取得授权，D 级不得商用。
 2. **再分发**：本工具**只分发代码，不分发任何市场数据**。你也不应把 B/C/D 级源取得的数据对外分发。
-3. **限速**：所有官方源请求已内置节流（见「官方源统一出口」）。**不要绕过它**——SEC 的 10 req/s 是官方硬上限。
+3. **限速**：所有官方源请求已内置节流（见「官方源统一出口」）。**不要绕过它**——SEC 的 10 req/s 是官方硬上限；BLS 免 key 版每天 25 次，也不要用多个 IP 或进程绕开。
 
 ---
 
@@ -228,7 +240,9 @@ SEC Filing层（仅美股）
 - 用户要看**内部人买卖**（高管 / 董事增减持明细）或**机构 13F 持仓**（如伯克希尔持仓）
 - 用户要查**台股**最新行情、本益比 / 殖利率 / 股价净值比、月营收、融资融券、除权息（官方可商用数据）
 - 用户要看**原油 / 天然气**现货价格或 EIA 每周库存
-- 关键词：美股、港股、AAPL、苹果、腾讯、00700、TSLA、特斯拉、BABA、阿里巴巴、行情、K线、财报、PE、PB、ROE、分析师、目标价、期权、call、put、SEC、10-K、年报、季报、资金流、主力、机构持仓、新闻、涨幅排名、全市场、筛选、关键指标、MACD、RSI、KDJ、布林带、均线、金叉、死叉、超买、超卖、技术分析、日股、台股、韩股、印度股、欧股、央行、政策利率、加息、降息、SOFR、EFFR、汇率、欧元、日元、收益率曲线、国债拍卖、美债、联邦债务、M2、VIX、恐慌指数、波动率、期限结构、做空余额、空头回补、轧空、内部人、高管减持、Form 4、13F、巴菲特持仓、台积电、台股本益比、月营收、原油、WTI、布伦特、天然气、EIA 库存
+- 用户要看**美国 CPI / 核心 CPI、非农、失业率、时薪、PPI、JOLTS 职位空缺、进口价格、ECI、生产率**，或这些数据**下次什么时候发布**、发布后会不会修订
+- 用户要看美国**每周初请 / 续请失业金**人数
+- 关键词：美股、港股、AAPL、苹果、腾讯、00700、TSLA、特斯拉、BABA、阿里巴巴、行情、K线、财报、PE、PB、ROE、分析师、目标价、期权、call、put、SEC、10-K、年报、季报、资金流、主力、机构持仓、新闻、涨幅排名、全市场、筛选、关键指标、MACD、RSI、KDJ、布林带、均线、金叉、死叉、超买、超卖、技术分析、日股、台股、韩股、印度股、欧股、央行、政策利率、加息、降息、SOFR、EFFR、汇率、欧元、日元、收益率曲线、国债拍卖、美债、联邦债务、M2、VIX、恐慌指数、波动率、期限结构、做空余额、空头回补、轧空、内部人、高管减持、Form 4、13F、巴菲特持仓、台积电、台股本益比、月营收、原油、WTI、布伦特、天然气、EIA 库存、美国宏观、CPI、核心CPI、通胀、非农、就业报告、失业率、平均时薪、PPI、JOLTS、职位空缺、初请失业金、续请失业金、ECI、劳动生产率、劳工统计局、BLS、经济数据日历
 
 ---
 
@@ -360,16 +374,18 @@ def eastmoney_datacenter(report_name: str, columns: str = "ALL",
 
 ### 官方源统一出口（限流 + UA 声明）— V2.0 新增
 
-V2.0 起新增的 Layer 9–13 全部走这个出口。它负责三件事：**按源限速**、**SEC User-Agent 声明**、
-**友好错误提示**。
+V2.0 起新增的 Layer 9–16 全部走这个出口。它负责三件事：**按源限速**、**SEC / BLS User-Agent 声明**、
+**友好错误提示**。V2.3 起传 `data`（表单）或 `json_body` 时改发 POST（BLS 多序列查询、劳工部申领表单要用）。
 
 > ⚠️ **使用前必改**：把 `SEC_CONTACT` 换成你自己的真实姓名与邮箱。
 > SEC 官方要求声明 User-Agent，未声明会被判定为 *Undeclared Automated Tool* 并拒绝服务。
+> V2.3 起美国劳工统计局 BLS（Layer 16）也用它：BLS 网站会拦不带联系方式的程序（实测直接 403）。
 
 ```python
 import requests, re, time, threading
 
 # ⚠️⚠️ 必改：SEC 要求 UA 含真实联系方式，格式 "Company Name AdminContact@domain.com"
+#          V2.3 起 BLS（Layer 16）也用这一行
 SEC_CONTACT = "your-name your-email@example.com"
 
 
@@ -403,6 +419,8 @@ _LIMITS = {
     "finra.org": _RateLimiter(4),
     "cboe.com": _RateLimiter(4),
     "nasdaq.com": _RateLimiter(2),
+    "bls.gov": _RateLimiter(2),       # BLS 官方上限 50 次 / 10 秒；免 key 版另有每天 25 次（见 Layer 16）
+    "doleta.gov": _RateLimiter(2),
     "_default": _RateLimiter(5),
 }
 
@@ -436,19 +454,21 @@ def _is_object_missing(resp) -> bool:
 
 
 def official_get(url: str, params: dict = None, headers: dict = None,
-                 timeout: int = 30, as_json: bool = False, raw: bool = False):
+                 timeout: int = 30, as_json: bool = False, raw: bool = False,
+                 data: dict = None, json_body: dict = None):
     """
     V2.0 官方源统一出口：自动节流 + UA 处理 + 友好错误。
     as_json=True 返回 dict，raw=True 返回 bytes（XML 不声明字符集时用），否则返回 str。
+    data / json_body：给了任一个就改发 POST（表单 / JSON），V2.3 新增。
 
     异常语义：资源不存在 → DataNotAvailable（调用方可回退到下一个候选日）；
              配置/限流/网络 → RuntimeError（必须冒泡）。
     """
-    if "sec.gov" in url:
+    if "sec.gov" in url or "bls.gov" in url:
         if "your-email@example.com" in SEC_CONTACT:
             raise RuntimeError(
-                "请先把 SEC_CONTACT 改成你的真实姓名与邮箱 —— SEC 要求声明 "
-                "User-Agent，否则返回 Undeclared Automated Tool 错误。")
+                "请先把 SEC_CONTACT 改成你的真实姓名与邮箱 —— SEC 与 BLS 都要求程序在 "
+                "User-Agent 里留联系方式：SEC 不留返回 Undeclared Automated Tool 错误，BLS 网站直接 403。")
         h = {"User-Agent": SEC_CONTACT, "Accept-Encoding": "gzip, deflate"}
     else:
         h = {"User-Agent": UA}
@@ -456,7 +476,10 @@ def official_get(url: str, params: dict = None, headers: dict = None,
 
     _limiter_for(url).wait()
     try:
-        r = requests.get(url, params=params, headers=h, timeout=timeout)
+        if data is not None or json_body is not None:
+            r = requests.post(url, params=params, data=data, json=json_body, headers=h, timeout=timeout)
+        else:
+            r = requests.get(url, params=params, headers=h, timeout=timeout)
         r.raise_for_status()
     except requests.HTTPError as e:
         resp = e.response
@@ -472,6 +495,11 @@ def official_get(url: str, params: dict = None, headers: dict = None,
                 f"SEC 拒绝请求：User-Agent 未被识别为已声明。"
                 f"当前 SEC_CONTACT={SEC_CONTACT!r}，"
                 f"格式应为 'Company Name AdminContact@domain.com'") from e
+        # ②b BLS 拦截不带联系方式的程序，也会临时封请求过快的地址
+        if code == 403 and "bls.gov" in url:
+            raise RuntimeError(
+                f"BLS 拒绝请求（HTTP 403）：请确认 SEC_CONTACT 里是真实邮箱（当前 {SEC_CONTACT!r}）；"
+                f"也可能是请求太频繁被临时封，稍后再试") from e
         # ③ 其余一律视为真错误，必须冒泡（限流/封禁/权限/接口变更）
         body = re.sub(r"\s+", " ", re.sub(r"(?s)<(script|style).*?</\1>|<[^>]+>", " ", resp.text or "")).strip()
         hint = {400: "参数错误：" + (body[:200] or "（官方未给原因）"),
@@ -3017,6 +3045,8 @@ def earnings_calendar(date: str = None) -> dict:
 （10Y−2Y=+0.34，未倒挂）；CFTC COT 最新报告日 2026-07-14；今日财报日历 41 家
 （AXP 盘前 EPS 预期 $4.41、VZ、NEE、HCA…）。
 
+> 美国 CPI、非农、失业率、PPI、每周初请失业金等宏观数据及其发布日程见 **Layer 16**（V2.3）。
+
 ---
 
 ## Layer 13: 全球利率 / 汇率 / 央行（S 级 ⭐ V2.1 新增）
@@ -3706,6 +3736,517 @@ def energy_inventories() -> dict:
 
 ---
 
+## Layer 16: 美国宏观 — 劳工统计局 BLS / 劳工部失业金申领（S 级 ⭐ V2.3 新增）
+
+美国劳工部（DOL）下属两家机构的公开接口，免注册、免密钥：劳工统计局 BLS 的公共 API v1（CPI、非农、失业率、PPI、JOLTS 等任意序列）
+与发布日程，就业与培训局 ETA 的每周失业金申领。两家同属劳工部，按「美国劳工部」计一家来源（同财政部的收益率曲线与 FiscalData）。
+BLS 的 API v2 要注册 key，按项目规则不用；BEA（GDP）、人口普查局、FRED 都要 key，也不接。
+
+| 入口 | 来源 | 能拿到什么 | 频率 |
+|---|---|---|---|
+| `bls_series(ids, start_year, end_year)` | BLS API v1 | 任意 BLS 序列号，超过 25 个序列或 10 年自动拆成多次请求 | 月 / 季 |
+| `us_macro(indicators, start_year, end_year)` | BLS API v1 | 23 个常用指标（下表）一次取齐，带中文说明、单位、是否季调、对应的发布名称 | 月 / 季 |
+| `us_macro_latest(indicators)` | BLS API v1 + 日程 | 各指标最新一期、上一期、去年同期，本地算环比 / 同比，附下次发布日期 | — |
+| `bls_release_calendar(release, start, end)` | BLS 官网日程 | CPI / 非农 / PPI / JOLTS 等每次发布的日期和美东时间 | — |
+| `us_jobless_claims(start_year, end_year)` | 劳工部 ETA | 每周初请、续请失业金人数（季调 / 未季调 / 四周均值）、保险失业率，1967 年起 | 周 |
+
+`us_macro()` 的指标（序列号 2026-11-02 逐个实测，名称照 data.bls.gov 序列说明页）：
+
+| 名称 | 序列号 | 内容 | 单位 | 季调 | 发布 |
+|---|---|---|---|---|---|
+| `cpi` / `cpi_sa` | CUUR0000SA0 / CUSR0000SA0 | CPI-U 城市全体消费者，总指数 | 指数 1982-84=100 | 否 / 是 | Consumer Price Index |
+| `core_cpi` / `core_cpi_sa` | CUUR0000SA0L1E / CUSR0000SA0L1E | 核心 CPI（不含食品和能源） | 同上 | 否 / 是 | 同上 |
+| `shelter_cpi_sa` | CUSR0000SAH1 | CPI 住房分项 | 同上 | 是 | 同上 |
+| `cpi_w` | CWUR0000SA0 | CPI-W 城市工薪和文职人员（社保调整用） | 同上 | 否 | 同上 |
+| `chained_cpi` | SUUR0000SA0 | 链式 CPI（C-CPI-U） | 指数 1999-12=100 | 否 | 同上 |
+| `unemployment_rate` | LNS14000000 | 失业率 | % | 是 | Employment Situation |
+| `u6` | LNS13327709 | U-6 广义失业率（含边缘劳动力和因经济原因兼职） | % | 是 | 同上 |
+| `participation_rate` | LNS11300000 | 劳动参与率 | % | 是 | 同上 |
+| `employment_population` | LNS12300000 | 就业人口比 | % | 是 | 同上 |
+| `payrolls` | CES0000000001 | 非农就业人数（企业调查） | 千人 | 是 | 同上 |
+| `avg_hourly_earnings` | CES0500000003 | 私营部门全体雇员平均时薪 | 美元 | 是 | 同上 |
+| `avg_weekly_hours` | CES0500000002 | 私营部门全体雇员平均周工时 | 小时 | 是 | 同上 |
+| `ppi` / `ppi_nsa` | WPSFD4 / WPUFD4 | PPI 最终需求 | 指数 2009-11=100 | 是 / 否 | Producer Price Index |
+| `core_ppi` / `core_ppi_nsa` | WPSFD49104 / WPUFD49104 | PPI 最终需求（不含食品和能源） | 指数 2010-04=100 | 是 / 否 | 同上 |
+| `jolts_openings` | JTS000000000000000JOL | JOLTS 职位空缺 | 千个 | 是 | Job Openings and Labor Turnover Survey |
+| `jolts_quits_rate` | JTS000000000000000QUR | JOLTS 主动离职率 | % | 是 | 同上 |
+| `import_prices` | EIUIR | 进口价格指数（全部商品） | 指数 2000=100 | 否 | U.S. Import and Export Price Indexes |
+| `eci_yoy` | CIU1010000000000A | 雇佣成本指数 ECI：全体文职人员总薪酬，同比 | % | 否 | Employment Cost Index |
+| `productivity` | PRS85006092 | 非农企业劳动生产率，较上季（季调年化） | % | 是 | Productivity and Costs |
+
+> **看新闻稿的口径**：BLS 新闻稿的 CPI、PPI「环比」用季调序列，「同比」用未季调序列。用 `us_macro_latest()` 时，
+> 环比看 `cpi_sa` / `core_cpi_sa` / `ppi` / `core_ppi` 那行的 `change_pct`，同比看 `cpi` / `core_cpi` / `ppi_nsa` / `core_ppi_nsa` 那行的 `yoy_pct`；
+> 非农「新增就业」看 `payrolls` 的 `change`（千人）。
+
+> **免 key 版的限制（官方 FAQ 与 2026-11-02 实测一致）**：每天 25 次请求、每次最多 25 个序列、每次最多 10 年；不提供变化率、年均值和序列说明。
+> ⚠️ 超出不报错：多出的年份和序列**直接被删掉**、状态照样是成功（只在提示里写一句 *"has been reduced to the system-allowed limit"*），
+> 所以 `bls_series()` 自己按 25 个 × 10 年拆请求，按计划要超过 `max_queries`（默认 5）就在联网前报 `ValueError`；
+> 同一请求 1 小时内复用结果，不重复占次数（发布当天要最新值，先 `_bls_cache.clear()`）。
+
+> **合规（S 级，须注明来源与取数日期）**：
+> - **BLS**：*"everything that we publish… is in the **public domain**… You are free to use our public domain material without specific permission, although we do ask that you **cite the Bureau of Labor Statistics** as the source."*
+>   API 使用条款另要求：*"Users of the public API should **cite the date** that data were accessed or retrieved using the API. Users must clearly state that “BLS.gov cannot vouch for the data or analyses derived from these data after the data have been retrieved from BLS.gov.”"*，
+>   且 *"Users may not modify or falsely represent content accessed through BLS.gov and still cite the source as BLS.gov."* 返回值里的 `retrieved` 和 `citation` 就是为此准备的，对外展示时照抄 `citation`。
+>   超限：*"If BLS reasonably believes that a user has attempted to exceed or circumvent these limits, that user's access to the API may be permanently or temporarily blocked."*——**不要用多个 IP 或多个进程绕开每天 25 次**。
+>   BLS 网站另写明：*"BLS also reserves the right to block robots that do not contain information that can be used to contact the owner."* 所以 bls.gov 一律带 `SEC_CONTACT`。
+> - **劳工部 ETA**：*"Materials created by the federal government are generally part of the **public domain** and may be used, reproduced and distributed without permission."* 不得暗示与劳工部有关联或受其认可；注明 *"U.S. Department of Labor"*。
+> - 条款原文读于 2026-11-02：BLS 版权页（Last Modified August 5, 2016）、API 使用条款与 FAQ（August 30, 2023）、网站使用政策（May 5, 2023）、劳工部版权页。
+
+```python
+import copy, re, time
+import xml.etree.ElementTree as ET
+from datetime import date as _date, datetime, timedelta
+# 依赖「官方源统一出口」的 official_get（V2.3：bls.gov 自动带 SEC_CONTACT、支持 POST）、
+# Layer 13 的 _num / _check_range / _YMD_ONLY、§9.2 的 _int_in、Layer 6 的 _et_today（美东日期）
+
+_BLS_API = "https://api.bls.gov/publicAPI/v1/timeseries/data/"
+_BLS_ICS = "https://www.bls.gov/schedule/news_release/bls.ics"
+_BLS_MAX_SERIES, _BLS_MAX_YEARS, _BLS_DAILY = 25, 10, 25    # 免 key 版官方上限，2026-11-02 实测一致
+_BLS_ID = re.compile(r"[A-Z0-9_#\-]{2,45}")                  # 官方：大写字母、数字，可含 _ - #
+_BLS_CITE = ("Source: U.S. Bureau of Labor Statistics, retrieved {d}. BLS.gov cannot vouch for the data "
+             "or analyses derived from these data after the data have been retrieved from BLS.gov.")
+_BLS_TTL = 3600
+_bls_cache = {}                                              # 同一请求 1 小时内复用：免 key 版每天只有 25 次
+
+
+def _fixed_get(url: str, **kw):
+    """本层的地址都是固定的：404 说明地址变了，不是「这一年没数据」，所以改报 RuntimeError"""
+    try:
+        return official_get(url, **kw)
+    except DataNotAvailable as e:
+        raise RuntimeError(f"{url} 返回「不存在」，官方可能换了地址：{e}") from e
+
+
+def _bls_date(year, period):
+    """M01–M12 → 2026-09；Q01–Q04 → 2026-Q3；S01/S02 → 2026-H1；A01 → 2026。
+    年均值（M13 / Q05 / S03）返回 None；认不出的写法报 RuntimeError，不悄悄丢掉"""
+    p, y = str(period or ""), str(year or "")
+    if p in ("M13", "Q05", "S03"):
+        return None
+    n = int(p[1:]) if re.fullmatch(r"\d{4}", y) and re.fullmatch(r"[MQSA]\d{2}", p) else 0
+    if p[:1] == "M" and 1 <= n <= 12:
+        return f"{y}-{n:02d}"
+    if p[:1] == "Q" and 1 <= n <= 4:
+        return f"{y}-Q{n}"
+    if p[:1] == "S" and n in (1, 2):
+        return f"{y}-H{n}"
+    if p == "A01" and n:
+        return y
+    raise RuntimeError(f"BLS 返回了认不出的期次（year={year!r}, period={period!r}），接口格式可能变了")
+
+
+def _bls_value(v, where: str):
+    """BLS 的数：只有 "-"（这一期没有数，如 2025 年 10 月停摆）算 None；别的写法说明格式变了，不能当成 None"""
+    t = str(v if v is not None else "").strip()
+    if t == "-":
+        return None
+    if not re.fullmatch(r"-?\d+(\.\d+)?", t):
+        raise RuntimeError(f"BLS 返回了读不懂的数 {v!r}（{where}），接口格式可能变了")
+    return float(t)
+
+
+def _bls_parse(series_json) -> list:
+    rows, seen = [], set()
+    sid = series_json.get("seriesID")
+    for d in series_json["data"]:
+        if not isinstance(d, dict):
+            raise RuntimeError(f"BLS 返回的 {sid} 数据格式变了")
+        dt = _bls_date(d.get("year"), d.get("period"))
+        if dt is None:
+            continue
+        if dt in seen:                         # 同一期出现两次：不知道该信哪一个
+            raise RuntimeError(f"BLS 返回的 {sid} 里 {dt} 出现了两次")
+        seen.add(dt)
+        notes = [f for f in (d.get("footnotes") or []) if isinstance(f, dict) and (f.get("code") or f.get("text"))]
+        rows.append({"date": dt, "value": _bls_value(d.get("value"), f"{sid} {dt}"),
+                     "preliminary": any(f.get("code") in ("P", "I", "U") for f in notes),
+                     "footnotes": [(f"{f['code']}: " if f.get("code") else "") + (f.get("text") or "")
+                                   for f in notes]})
+    return rows
+
+
+def _bls_request(ids: list, y0: int, y1: int):
+    """一次 POST（≤25 个序列、≤10 年）。返回 (结果, 是否来自缓存)"""
+    key = (tuple(ids), y0, y1)
+    hit = _bls_cache.get(key)
+    if hit and time.time() - hit[0] < _BLS_TTL:
+        return copy.deepcopy(hit[1]), True
+    j = _fixed_get(_BLS_API, json_body={"seriesid": list(ids), "startyear": str(y0), "endyear": str(y1)},
+                     as_json=True, timeout=60)
+    status = j.get("status")
+    msgs = [str(m).strip() for m in (j.get("message") or [])]
+    if status == "REQUEST_FAILED_INVALID_PARAMETERS":
+        raise ValueError("BLS 拒绝参数：" + "；".join(msgs))
+    if status != "REQUEST_SUCCEEDED":
+        raise RuntimeError(f"BLS 返回 {status}：{'；'.join(msgs) or '没有说明'}"
+                           f"（免 key 版每天 25 次，用完要等第二天）")
+    if any("reduced to the system-allowed limit" in m for m in msgs):
+        raise RuntimeError("BLS 截短了这次请求，免 key 版上限可能变了，请核对官方 FAQ：" + "；".join(msgs))
+    out = {"series": {}, "missing": [], "no_data": {}, "notes": [], "retrieved": _date.today().isoformat()}
+    for m in msgs:
+        bad = re.fullmatch(r"(?:Series does not exist|Invalid Series) for Series (\S+?)[.!]?", m)
+        gap = re.fullmatch(r"No Data Available for Series (\S+) Year: (\d{4})", m)
+        if bad:
+            out["missing"].append(bad.group(1).upper())
+        elif gap:
+            out["no_data"].setdefault(gap.group(1).upper(), []).append(int(gap.group(2)))
+        elif not m.startswith("Unable to get Catalog Data"):   # v1 不提供序列说明，JOLTS 等会带这句，无害
+            out["notes"].append(m)
+    res = j.get("Results")
+    lst = res.get("series") if isinstance(res, dict) else None
+    if not isinstance(lst, list) or not all(isinstance(s, dict) and isinstance(s.get("data"), list) for s in lst):
+        raise RuntimeError("BLS 说成功，但返回里没有 Results.series 或格式变了；这次不缓存，请稍后重试")
+    got = [str(s.get("seriesID", "")).upper() for s in lst]
+    if sorted(got) != sorted(ids):             # 必须正好是请求的那几个、各一次：漏回、多回、重复都不能当成正常结果，也不缓存
+        lost = [i for i in ids if i not in got]
+        extra = sorted({g for g in got if g not in ids or got.count(g) > 1})
+        raise RuntimeError(f"BLS 返回的序列和请求的对不上（漏回 {lost}，多出或重复 {extra}）；这次不缓存，请稍后重试")
+    for sid, s in zip(got, lst):
+        out["series"][sid] = _bls_parse(s)
+    for i in ids:
+        if not out["series"][i] and i not in out["missing"] and i not in out["no_data"]:
+            out["notes"].append(f"{i} 在 {y0}–{y1} 年没有返回数据，BLS 也没说明原因")
+    _bls_cache[key] = (time.time(), out)
+    return copy.deepcopy(out), False
+
+
+def _year_spans(years: list) -> str:
+    ys, spans = sorted(set(years)), []
+    for y in ys:
+        if spans and y == spans[-1][1] + 1:
+            spans[-1][1] = y
+        else:
+            spans.append([y, y])
+    return "、".join(str(a) if a == b else f"{a}–{b}" for a, b in spans)
+
+
+# ── 16.1 BLS 任意序列 ──
+
+def bls_series(series_ids, start_year: int = None, end_year: int = None, max_queries: int = 5) -> dict:
+    """
+    BLS 公共 API v1（免注册、免 key，S 级；对外展示须注明来源与取数日期，照抄返回的 citation）。
+    series_ids : 一个序列号或列表，如 "CUUR0000SA0" 或 ["CUSR0000SA0", "LNS14000000"]（序列号在 data.bls.gov 的 Data Finder 查）
+    start_year / end_year : 年份（含），1913 起；不传取最近 3 年（今年和前两年）
+    max_queries : 这次最多发几次请求（1–25）。按 25 个序列 × 10 年拆分后超过它，就在联网前报 ValueError
+    返回 {"series": {序列号: [{date, value, preliminary, footnotes}]（日期升序）},
+          "notes": [BLS 的其他提示], "queries": 实际联网次数（缓存命中不算）, "retrieved": 取数日期, "citation": 引用声明}
+      date：月度 2026-09 / 季度 2026-Q3 / 半年 2026-H1 / 年度 2026（年均值行不返回，v1 本来也不给）
+      value：None = BLS 这一期写的是 "-"（如 2025 年 10 月政府停摆）；有的序列那一期整行没有，rows 里就没有这一期
+      "retrieved" 是实际取数那天（命中缓存时沿用当时的日期）
+      preliminary：带 P（初值）或 I / U（链式 CPI 的初值 / 中间值）脚注。False 不代表以后不改，见下方「修订」
+    """
+    if isinstance(series_ids, str):
+        series_ids = [series_ids]
+    if not isinstance(series_ids, (list, tuple)) or not series_ids:
+        raise ValueError("series_ids 给一个序列号或序列号列表")
+    ids = []
+    for s in series_ids:
+        sid = s.strip().upper() if isinstance(s, str) else ""
+        if not _BLS_ID.fullmatch(sid):
+            raise ValueError(f"无效的 BLS 序列号：{s!r}")
+        if sid not in ids:
+            ids.append(sid)
+    this_year = _date.today().year
+    y1 = this_year if end_year is None else _int_in(end_year, "end_year", 1913, this_year)
+    y0 = max(1913, y1 - 2) if start_year is None else _int_in(start_year, "start_year", 1913, this_year)
+    if y0 > y1:
+        raise ValueError(f"start_year {y0} 晚于 end_year {y1}")
+    mq = _int_in(max_queries, "max_queries", 1, _BLS_DAILY)
+    chunks = [ids[i:i + _BLS_MAX_SERIES] for i in range(0, len(ids), _BLS_MAX_SERIES)]
+    spans = [(y, min(y + _BLS_MAX_YEARS - 1, y1)) for y in range(y0, y1 + 1, _BLS_MAX_YEARS)]
+    need = len(chunks) * len(spans)
+    if need > mq:
+        tip = (f"确定要取就把 max_queries 调到 {need}" if need <= _BLS_DAILY
+               else "超过每天 25 次，一天内取不完，请减少序列或缩短年份")
+        raise ValueError(f"这次要发 {need} 次请求（{len(ids)} 个序列 × {y1 - y0 + 1} 年，每次最多 "
+                         f"{_BLS_MAX_SERIES} 个序列、{_BLS_MAX_YEARS} 年），超过 max_queries={mq}；"
+                         f"免 key 版每天只有 25 次，{tip}")
+    series, no_data, notes, sent, got = {sid: [] for sid in ids}, {}, [], 0, []
+    for ch in chunks:
+        for a, b in spans:
+            out, cached = _bls_request(ch, a, b)
+            sent += 0 if cached else 1
+            if out["missing"]:           # 序列号写错：第一次请求就能发现，不再往下发
+                raise DataNotAvailable(f"BLS 没有这些序列：{out['missing']}（序列号可在 data.bls.gov 的 Data Finder 查）")
+            for sid, ys in out["no_data"].items():
+                no_data.setdefault(sid, []).extend(ys)
+            notes += [m for m in out["notes"] if m not in notes]
+            for sid, rows in out["series"].items():
+                if sid in series:
+                    series[sid] += rows
+            got.append(out["retrieved"])
+    for sid in series:
+        series[sid].sort(key=lambda r: r["date"])
+    if not any(series.values()):
+        raise DataNotAvailable(f"{ids} 在 {y0}–{y1} 年没有数据")
+    notes += [f"{sid} 没有 {_year_spans(ys)} 年的数据" for sid, ys in no_data.items()]
+    d = min(got)                                 # 实际取数那天（缓存跨过午夜也不改）
+    return {"series": series, "notes": notes, "queries": sent, "retrieved": d, "citation": _BLS_CITE.format(d=d)}
+
+
+# ── 16.2 常用指标（名称 → 序列号）──
+
+_US_MACRO = {
+    # 名称: (序列号, 说明, 单位, 是否季调, 频率, 发布名称（bls_release_calendar 用）, 类型)
+    # 类型 index / money：算变化率；level：只算差值（非农看新增人数）；rate：本身是百分比，只算百分点差
+    "cpi": ("CUUR0000SA0", "CPI-U 总指数", "index 1982-84=100", False, "M", "Consumer Price Index", "index"),
+    "cpi_sa": ("CUSR0000SA0", "CPI-U 总指数（季调）", "index 1982-84=100", True, "M", "Consumer Price Index", "index"),
+    "core_cpi": ("CUUR0000SA0L1E", "核心 CPI（不含食品和能源）", "index 1982-84=100", False, "M", "Consumer Price Index", "index"),
+    "core_cpi_sa": ("CUSR0000SA0L1E", "核心 CPI（季调）", "index 1982-84=100", True, "M", "Consumer Price Index", "index"),
+    "shelter_cpi_sa": ("CUSR0000SAH1", "CPI 住房分项（季调）", "index 1982-84=100", True, "M", "Consumer Price Index", "index"),
+    "cpi_w": ("CWUR0000SA0", "CPI-W 城市工薪和文职人员", "index 1982-84=100", False, "M", "Consumer Price Index", "index"),
+    "chained_cpi": ("SUUR0000SA0", "链式 CPI（C-CPI-U）", "index 1999-12=100", False, "M", "Consumer Price Index", "index"),
+    "unemployment_rate": ("LNS14000000", "失业率", "percent", True, "M", "Employment Situation", "rate"),
+    "u6": ("LNS13327709", "U-6 广义失业率", "percent", True, "M", "Employment Situation", "rate"),
+    "participation_rate": ("LNS11300000", "劳动参与率", "percent", True, "M", "Employment Situation", "rate"),
+    "employment_population": ("LNS12300000", "就业人口比", "percent", True, "M", "Employment Situation", "rate"),
+    "payrolls": ("CES0000000001", "非农就业人数", "thousands of persons", True, "M", "Employment Situation", "level"),
+    "avg_hourly_earnings": ("CES0500000003", "私营部门平均时薪", "USD per hour", True, "M", "Employment Situation", "money"),
+    "avg_weekly_hours": ("CES0500000002", "私营部门平均周工时", "hours", True, "M", "Employment Situation", "level"),
+    "ppi": ("WPSFD4", "PPI 最终需求（季调）", "index 2009-11=100", True, "M", "Producer Price Index", "index"),
+    "ppi_nsa": ("WPUFD4", "PPI 最终需求", "index 2009-11=100", False, "M", "Producer Price Index", "index"),
+    "core_ppi": ("WPSFD49104", "PPI 最终需求不含食品和能源（季调）", "index 2010-04=100", True, "M", "Producer Price Index", "index"),
+    "core_ppi_nsa": ("WPUFD49104", "PPI 最终需求不含食品和能源", "index 2010-04=100", False, "M", "Producer Price Index", "index"),
+    "jolts_openings": ("JTS000000000000000JOL", "JOLTS 职位空缺", "thousands", True, "M",
+                       "Job Openings and Labor Turnover Survey", "level"),
+    "jolts_quits_rate": ("JTS000000000000000QUR", "JOLTS 主动离职率", "percent", True, "M",
+                         "Job Openings and Labor Turnover Survey", "rate"),
+    "import_prices": ("EIUIR", "进口价格指数", "index 2000=100", False, "M", "U.S. Import and Export Price Indexes", "index"),
+    "eci_yoy": ("CIU1010000000000A", "雇佣成本指数 ECI 总薪酬同比", "percent (12-month change)", False, "Q",
+                "Employment Cost Index", "rate"),
+    "productivity": ("PRS85006092", "非农企业劳动生产率（较上季，季调年化）", "percent (annual rate)", True, "Q",
+                     "Productivity and Costs", "rate"),
+}
+
+
+def _macro_names(indicators) -> list:
+    if indicators is None:
+        return list(_US_MACRO)
+    names = [indicators] if isinstance(indicators, str) else indicators
+    if not isinstance(names, (list, tuple)) or not names:
+        raise ValueError(f"indicators 给名称或名称列表，可选 {list(_US_MACRO)}")
+    bad = [n for n in names if n not in _US_MACRO]
+    if bad:
+        raise ValueError(f"没有这些指标：{bad}；可选 {list(_US_MACRO)}（其他序列用 bls_series）")
+    return list(dict.fromkeys(names))
+
+
+def us_macro(indicators=None, start_year: int = None, end_year: int = None, max_queries: int = 5) -> dict:
+    """
+    美国常用宏观指标（BLS，S 级）。indicators：名称或列表，None = 全部 23 个（一次请求就够）。
+    start_year / end_year / max_queries 同 bls_series（不传取最近 3 年；1913 年起，但多数指标起点更晚）
+    返回 {"indicators": {名称: {series_id, name, unit, seasonally_adjusted, frequency, release, rows}},
+          "notes", "queries", "retrieved", "citation"}；rows 同 bls_series
+    """
+    names = _macro_names(indicators)
+    r = bls_series([_US_MACRO[n][0] for n in names], start_year, end_year, max_queries)
+    out = {}
+    for n in names:
+        sid, label, unit, sa, freq, release, _kind = _US_MACRO[n]
+        out[n] = {"series_id": sid, "name": label, "unit": unit, "seasonally_adjusted": sa,
+                  "frequency": "monthly" if freq == "M" else "quarterly", "release": release,
+                  "rows": r["series"][sid]}
+    return {"indicators": out, "notes": r["notes"], "queries": r["queries"],
+            "retrieved": r["retrieved"], "citation": r["citation"]}
+
+
+def _shift(period: str, k: int) -> str:
+    """期次往前推 k 期：2026-09 → 2026-08；2026-Q1 推 1 期 → 2025-Q4"""
+    y = int(period[:4])
+    if "-Q" in period:
+        n = y * 4 + int(period[-1]) - 1 - k
+        return f"{n // 4}-Q{n % 4 + 1}"
+    n = y * 12 + int(period[5:7]) - 1 - k
+    return f"{n // 12}-{n % 12 + 1:02d}"
+
+
+def us_macro_latest(indicators=None, next_release: bool = True) -> dict:
+    """
+    各指标最新一期 + 上一期 + 去年同期，变化在本地算（v1 不给变化率）。默认一次 BLS 请求 + 读一次日程。
+    返回 {"rows": [{indicator, name, unit, seasonally_adjusted, date, value, preliminary,
+                    prev_date, prev, change, change_pct, year_ago, yoy_change, yoy_pct, release, next_release}],
+          "notes", "queries", "retrieved", "citation"}
+      change / yoy_change：差值（失业率是百分点，非农是千人）；change_pct / yoy_pct：变化率 %，
+      只对指数和金额类给（失业率这类本身是百分比的给 None）。按 BLS 的做法用公布值直接算，未四舍五入
+      上一期、去年同期按期次找，不按位置；那一期没有数（2025 年 10 月停摆）就是 None
+      next_release：下一次发布 {date, time_et}（按美东日期，当天的也算），日程里没有就是 None
+    """
+    names = _macro_names(indicators)
+    m = us_macro(names)
+    upcoming, notes = [], list(m["notes"])
+    if next_release:
+        try:
+            upcoming = bls_release_calendar(start=_et_today())     # Layer 6 的美东日期，分得清冬夏令时
+        except RuntimeError as e:              # 日程取不到不影响数值（DataNotAvailable 也是 RuntimeError）
+            notes.append(f"发布日程没取到，next_release 都是 None：{e}")
+    rows = []
+    for n in names:
+        it, kind = m["indicators"][n], _US_MACRO[n][6]
+        vals = {r["date"]: r for r in it["rows"] if r["value"] is not None}
+        row = {"indicator": n, "name": it["name"], "unit": it["unit"],
+               "seasonally_adjusted": it["seasonally_adjusted"], "release": it["release"],
+               "next_release": next(({"date": e["date"], "time_et": e["time_et"]} for e in upcoming
+                                     if e["release"] == it["release"]), None)}
+        if not vals:                           # 字段照样给全，缺的都是 None
+            rows.append(dict(row, **dict.fromkeys(("date", "value", "preliminary", "prev_date", "prev", "change",
+                                                   "change_pct", "year_ago", "yoy_change", "yoy_pct"))))
+            continue
+        last = max(vals)
+        cur = vals[last]["value"]
+        prev_d = _shift(last, 1)
+        prev = vals.get(prev_d, {}).get("value")
+        ya = vals.get(_shift(last, 4 if "-Q" in last else 12), {}).get("value")
+
+        def _chg(a):
+            return None if a is None else round(cur - a, 6)
+
+        def _pct(a):
+            return None if a is None or kind not in ("index", "money") or not a else (cur / a - 1) * 100
+
+        row.update({"date": last, "value": cur, "preliminary": vals[last]["preliminary"],
+                    "prev_date": prev_d, "prev": prev, "change": _chg(prev), "change_pct": _pct(prev),
+                    "year_ago": ya, "yoy_change": _chg(ya), "yoy_pct": _pct(ya)})
+        rows.append(row)
+    return {"rows": rows, "notes": notes, "queries": m["queries"],
+            "retrieved": m["retrieved"], "citation": m["citation"]}
+
+
+# ── 16.3 BLS 发布日程 ──
+
+def bls_release_calendar(release: str = None, start=None, end=None) -> list:
+    """
+    BLS 官方发布日程（官网 iCalendar 文件，S 级；不占 API 次数，但要配好 SEC_CONTACT）。
+    release : 按名称筛，不分大小写。和某个发布名称完全一致就只取它（"Employment Situation" 不带上
+              "Employment Situation of Veterans"），否则按包含筛（"price" 取全部带 Price 的发布）。
+              us_macro 返回的 release 字段可以直接传
+    start / end : YYYY-MM-DD（含），按美东日期
+    返回 [{date, time_et, release}]，按时间升序。只有 BLS 当前公布的那段日程；只有发布时间，不写这次发的是哪个月的数
+    """
+    if release is not None and not (isinstance(release, str) and release.strip()):
+        raise ValueError("release 给发布名称的一部分，如 'Consumer Price Index'")
+    start, end = _check_range(start, end, _YMD_ONLY)
+    text = re.sub(r"\r?\n[ \t]", "", _fixed_get(_BLS_ICS))        # iCalendar 折行：以空格开头的行接到上一行
+    body = text.strip("\ufeff \t\r\n")
+    lines = [ln.strip() for ln in body.splitlines()]
+    evs = re.findall(r"^BEGIN:VEVENT\r?$(.*?)^END:VEVENT\r?$", body, re.S | re.M)
+    # 整份文件要完整：首尾是 VCALENDAR，事件开闭配对，否则可能是被截断的残件（读出来会少几条，不能当成「没有发布」）
+    if not (body.startswith("BEGIN:VCALENDAR") and body.endswith("END:VCALENDAR") and evs
+            and lines.count("BEGIN:VEVENT") == lines.count("END:VEVENT") == len(evs)):
+        raise RuntimeError(f"BLS 日程不是完整的日历文件（开头：{body[:60]!r}，结尾：{body[-40:]!r}），请核对 {_BLS_ICS}")
+    out = []
+    for ev in evs:
+        t = re.search(r"^DTSTART([^:\r\n]*):(\d{8}T\d{6})\r?$", ev, re.M)
+        s = re.search(r"^SUMMARY[^:\r\n]*:(.*?)\r?$", ev, re.M)
+        try:
+            when = datetime.strptime(t.group(2), "%Y%m%dT%H%M%S") if t else None
+        except ValueError:                        # 位数对、日期或时间不存在（如 2 月 30 日、25:61）
+            when = None
+        if not (when and s and s.group(1).strip()):   # 现在 313 个事件都带合法时间和名称；缺了说明格式变了，不能悄悄少几条
+            raise RuntimeError(f"BLS 日程里有一条读不懂的事件（{ev.strip()[:120]!r}），请核对 {_BLS_ICS}")
+        if "TZID=US-Eastern" not in t.group(1):
+            raise RuntimeError(f"BLS 日程的时区写法变了（{t.group(1)!r}），请核对 {_BLS_ICS}")
+        name = s.group(1).strip().replace("\\,", ",").replace("\\;", ";")
+        out.append({"date": when.strftime("%Y-%m-%d"), "time_et": when.strftime("%H:%M"), "release": name})
+    if release:                                   # 先在整份日程里定筛法，再筛日期
+        want = release.strip().lower()
+        exact = any(r["release"].lower() == want for r in out)
+        out = [r for r in out if (r["release"].lower() == want if exact else want in r["release"].lower())]
+    out = [r for r in out if not ((start and r["date"] < start) or (end and r["date"] > end))]
+    if not out:
+        raise DataNotAvailable(f"BLS 日程里没有符合条件的发布（release={release!r}, {start}–{end}）")
+    return sorted(out, key=lambda r: (r["date"], r["time_et"]))
+
+
+# ── 16.4 每周失业金申领 — 劳工部 ETA ──
+
+_DOL_CLAIMS = "https://oui.doleta.gov/unemploy/wkclaims/report.asp"
+_DOL_FIELDS = (("initial_nsa", "InitialClaims/NSA"), ("initial_sa", "InitialClaims/SA"),
+               ("initial_sa_4wk", "InitialClaims/SA4WK"), ("continued_nsa", "ContinuedClaims/NSA"),
+               ("continued_sa", "ContinuedClaims/SA"), ("continued_sa_4wk", "ContinuedClaims/SA4WK"),
+               ("iur_nsa", "IUR/NSA"), ("iur_sa", "IUR/SA"), ("covered_employment", "CoveredEmployment"))
+
+
+def _dol_num(s, where: str):
+    t = (s or "").replace("\xa0", " ").strip()                       # 空格子是 &#160;，数字带千分位
+    if not t:
+        return None
+    if not re.fullmatch(r"-?(\d{1,3}(,\d{3})+|\d+)(\.\d+)?", t):    # 先按完整写法校验再去逗号；只有空格子算没有数
+        raise RuntimeError(f"劳工部申领文件里有读不懂的数 {s!r}（{where}），格式可能变了")
+    t = t.replace(",", "")
+    return float(t) if "." in t else int(t)
+
+
+def us_jobless_claims(start_year: int = None, end_year: int = None) -> list:
+    """
+    美国每周失业金申领，全美合计（劳工部 ETA，S 级，注明来源 U.S. Department of Labor）。1967 年起。
+    start_year / end_year : 年份（含），不传取今年和去年
+    返回 [{week_ended, initial_nsa, initial_sa, initial_sa_4wk, continued_nsa, continued_sa, continued_sa_4wk,
+           iur_nsa, iur_sa, covered_employment}]，按周升序；week_ended 是那一周的周六
+      initial：这一周新提交的初次申请；continued：这一周仍在领取的周数（又叫 insured unemployment），比初请晚一周公布
+      iur：保险失业率 %（续请 ÷ 失业保险覆盖的就业人数）；没有的格子是 None（1967 年的四周均值、保险失业率等）
+    还没有数的周不返回（官方文件里未来的周只有季节因子）
+    """
+    this_year = _date.today().year
+    y1 = this_year if end_year is None else _int_in(end_year, "end_year", 1967, this_year)
+    y0 = max(1967, y1 - 1) if start_year is None else _int_in(start_year, "start_year", 1967, this_year)
+    if y0 > y1:
+        raise ValueError(f"start_year {y0} 晚于 end_year {y1}")
+    raw = _fixed_get(_DOL_CLAIMS, data={"level": "us", "strtdate": str(y0), "enddate": str(y1),
+                                          "filetype": "xml"}, raw=True, timeout=90)
+    try:
+        root = ET.fromstring(raw)
+    except ET.ParseError:      # 2026-11-02 实测：对方数据库连不上时返回 200 和一句 "Unable to connect!…"
+        head = re.sub(r"\s+", " ", raw[:150].decode("utf-8", "replace")).strip()
+        raise RuntimeError(f"劳工部没有返回 XML（返回开头：{head!r}）：可能是对方数据库临时故障（稍后再试），"
+                           "也可能是表单规则变了，请到 oui.doleta.gov/unemploy/claims.asp 核对") from None
+    if root.tag != "r539cyNational":
+        raise RuntimeError(f"劳工部申领文件格式变了（根节点 {root.tag!r}）")
+    out = []
+    for w in root.findall("week"):
+        raw_wk = w.findtext("weekEnded")
+        try:
+            wk = datetime.strptime((raw_wk or "").strip(), "%m/%d/%Y").date().isoformat()
+        except ValueError:
+            raise RuntimeError(f"劳工部申领文件里有读不懂的日期 {raw_wk!r}，格式可能变了") from None
+        row = {"week_ended": wk}
+        row.update({k: _dol_num(w.findtext(path), f"{wk} {path}") for k, path in _DOL_FIELDS})
+        if all(row[k] is None for k, _ in _DOL_FIELDS):
+            continue
+        out.append(row)
+    if not out:
+        raise DataNotAvailable(f"劳工部 {y0}–{y1} 年没有申领数据")
+    return sorted(out, key=lambda r: r["week_ended"])
+```
+
+### 16.5 发布时间、修订，回放历史会不会偷看未来
+
+API 只给**现在的最新修订值**，不给当时第一次公布的数。用它回测或回放历史，要同时管两件事：**这个数什么时候才知道**、**它后来改过没有**。
+
+| 发布 | 对应指标 | 什么时候发（美东时间，按 2025–2026 年官方日程） | 之后怎么改（官方原文要点） |
+|---|---|---|---|
+| Consumer Price Index | `cpi*` `core_cpi*` `shelter_cpi_sa` `cpi_w` `chained_cpi` | 次月 10–15 日前后 08:30 | CPI-U、CPI-W 未季调值 *"final when issued"*，只有发现错误才更正；季调值每年随 1 月数据重算，*"revisions to seasonally adjusted indexes for the previous 5 years"*（2021-01 至 2025-12 那次在 2026-02-13 发布）；链式 CPI 先发初值，*"subject to three quarterly revisions"*，10–12 个月后才定 |
+| Employment Situation | `unemployment_rate` `u6` `participation_rate` `employment_population` `payrolls` `avg_*` | 通常次月第一个周五 08:30 | 企业调查（非农、时薪、工时）*"The prior 2 months are routinely revised"*，最新两个月标 P；每年还有基准修订（3 月就业数对照失业保险登记数，*"absolute average benchmark revision… 0.2 percent"*）。住户调查（失业率等）季调因子 *"only the current month's data"*，每年改一次过去 5 年；2026 年 1 月起用新人口基数（脚注 12） |
+| Producer Price Index | `ppi*` `core_ppi*` | 次月中旬 08:30 | *"subject to monthly revisions up to four months after original publication"*，最新四个月标 P |
+| Job Openings and Labor Turnover Survey | `jolts_*` | 参考月后约 5 周，多为周二 10:00（8 月数据 09-29 发、9 月数据 11-03 发） | 最新一个月标 P；*"revised annually with the issuance of data for January. Five years of data are subject to revision"* |
+| U.S. Import and Export Price Indexes | `import_prices` | 次月中旬 08:30 | *"monthly data may be revised in each of the 3 months after original publication"*，改过的标 R |
+| Employment Cost Index | `eci_yoy` | 季后一个月月底 08:30（2026：02-10（停摆后推迟）、04-30、07-31、10-30） | 季调值每年改过去 5 年；`eci_yoy` 用的是未季调同比 |
+| Productivity and Costs | `productivity` | 季后约 5 周发初值、再过约 4 周发修订值（2026 年二季度：08-06、09-03），08:30 | 同一季度至少改一次；之后还改几次本工具没有核实，回放时当作会改 |
+| 劳工部每周申领 | `us_jobless_claims` | 每周四 08:30 发上周六为止的初请（续请晚一周） | 下一周按申请人居住州重报后修订；每年初换新季节因子，同时修订历史 |
+
+**怎么用才不偷看未来**：
+1. **按发布日期对齐**，不按数据所属月份：某月的数要等它的发布日之后才能用。用 `bls_release_calendar()` 查真实日期，不要假设「次月 10 号」——
+   2025 年政府停摆时，9 月 CPI 拖到 2025-10-24 才发，10 月 CPI 没有发（API 里是 "-" 或整行没有），9 月非农拖到 2025-11-20。
+2. **优先用不修订的序列**：CPI-U / CPI-W 未季调值发布即定稿；要季调的环比，只能拿到「现在的季调值」，它和当时公布的不一样。
+3. **非农、PPI、JOLTS、进口价格、生产率这些会修订的**，API 里的历史值已经是改过的，等于用了当时还不知道的信息，回测会失真（偏好还是偏差说不准）。要逐次公布的原始值，
+   v1 没有；BLS 官网的历史新闻稿有当时的数（本工具没有接）。
+4. `preliminary` 只标出**现在还是初值**的那几期；`False` 不代表不会再改（季调年度修订、基准修订都不打标记）。
+5. 劳工部申领：这个文件比每周四的新闻稿晚。2026-11-02 实测文件（rundate 11/2/2026）最新完整一周是 10-03，而 10-29 的新闻稿已发到 10-24 的初请；
+   官方页面同时挂着数据库技术问题的通知（*"currently encountering technical issues with our database"*），当天下午还碰到过数据库连不上（返回一句 *"Unable to connect!"*，本工具报 `RuntimeError`，稍后重试即可）。要最新一周的数，以周四新闻稿为准。
+
+**实测（2026-11-02，Python 3.9.6）**：`us_macro()` 一次请求取齐 23 个指标；`us_macro_latest()` 算出的数和 BLS 新闻稿逐项一致——2026 年 9 月 CPI 季调环比 0.6%、未季调同比 3.7%，PPI 季调环比 1.3%、未季调同比 6.3%，进口价格环比 1.1%、同比 8.1%，非农新增 2.9 万、失业率 4.2%；8 月职位空缺 7,079 千（新闻稿 7.1 million）；三季度 ECI 同比 3.4%，二季度生产率 1.4%（修订值）。2025 年 10 月 CPI 是 None、带停摆脚注；非农最新两期标初值。CPI-U 未季调 2000–2026 年拆 3 次请求拼出 321 个月（2000-01 为 168.8）。日程：2026 年 CPI 12 次发布日期与官网一致，下次 CPI 2026-11-10 08:30、就业报告 11-06、JOLTS 11-03 10:00。申领：1967-01-07 至 2026-10-03 共 3,118 周（2.8 秒），2026-10-03 当周初请季调 198,000、四周均值 198,250、续请 1,703,000、保险失业率 1.1%，和劳工部 10-29 新闻稿表里的数一致。
+
+---
+
 ## 数据源优先级
 
 | 场景 | 第一优先 | 备选 | 说明 |
@@ -3740,6 +4281,9 @@ def energy_inventories() -> dict:
 | **机构 13F 持仓** | **SEC 13F** ⭐ | Yahoo 机构持仓（前 10 大，D 级） | 每季一次、季末后 45 天内申报。**S 级可商用** |
 | **台股最新行情 / 估值 / 月营收** | **证交所 / 柜买中心 OpenAPI** ⭐ | Yahoo `.TW` / `.TWO`（有历史，D 级） | 只有最新一天；**S 级可商用，须注明来源** |
 | **原油 / 天然气价格与库存** | **EIA** ⭐ | Yahoo `CL=F` 等期货（D 级） | 每周库存 **S 级可商用**；现货日价是 EIA 转载的 Refinitiv 数据，B 级，商用前自行确认 |
+| **美国 CPI / 非农 / 失业率 / PPI / JOLTS 等** | **劳工统计局 BLS API v1** ⭐ | BLS 官网新闻稿 | 免 key 版每天 25 次，同一请求 1 小时内复用；**S 级可商用，须注明来源与取数日期** |
+| **宏观数据发布日程** | **BLS 官网日程** ⭐ | — | 回放历史按真实发布日对齐，见 16.5 |
+| **每周初请 / 续请失业金** | **劳工部 ETA** ⭐ | 劳工部每周四新闻稿（更快） | 文件比新闻稿晚；**S 级可商用** |
 | SEC Filing | EDGAR | — | 官方数据，仅美股 |
 | XBRL财务 | EDGAR | — | 503个GAAP指标 |
 | 搜索 | 东财 search | Yahoo search | 东财有 secid 映射 |
@@ -3761,6 +4305,7 @@ def energy_inventories() -> dict:
 | **纽约联储** | **S** | HTTPS | 零 | **SOFR / EFFR / OBFR / TGCR / BGCR**（展示须附声明） |
 | **BIS** | **S** | HTTPS | 零 | **全球央行政策利率**（注明来源） |
 | **欧洲央行 ECB** | **S** | HTTPS | 零 | **欧元汇率 / ECB 利率 / 欧元区收益率曲线**（注明来源、不得改动） |
+| **美国劳工部**（劳工统计局 BLS + 就业与培训局 ETA） | **S** | HTTPS | 零（bls.gov 需真实UA） | **CPI / 非农 / 失业率 / PPI / JOLTS / 进口价格 / ECI / 生产率**（免 key 版每天 25 次）+ **BLS 发布日程** + **每周初请 / 续请失业金**（注明来源与取数日期） |
 | **美国能源信息署 EIA** | **S** / B | HTTPS | 零 | **原油 / 天然气每周库存**（S 级，注明来源与日期）+ WTI / 布伦特 / Henry Hub 现货日价（B 级，转载 Refinitiv） |
 | **台湾证交所 TWSE** | **S** | HTTPS | 零 | **台股上市**最新行情 / 估值 / 月营收 / 基本资料 / 融资融券 / 除权息 / 股利（注明来源） |
 | **柜买中心 TPEx** | **S** | HTTPS | 零 | **台股上柜**最新行情 / 估值 / 月营收 / 基本资料 / 融资融券 / 除权息（注明来源） |

@@ -4,16 +4,16 @@
 
 <p align="center">
   <b>US Market Data for AI Coding Assistants</b><br>
-  Options Greeks · 0DTE Flow · VIX Term Structure · SEC Filings & Insider Trades · Short Data · Fundamentals · Screener · Global Rates & FX · Taiwan · Energy
+  Options Greeks · 0DTE Flow · VIX Term Structure · SEC Filings & Insider Trades · Short Data · Fundamentals · Screener · Global Rates & FX · Taiwan · Energy · US Macro
 </p>
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License: Apache 2.0"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.9+-3776AB?logo=python&logoColor=white" alt="Python 3.9+"></a>
   <a href="https://github.com/simonlin1212/global-stock-data/stargazers"><img src="https://img.shields.io/github/stars/simonlin1212/global-stock-data?style=social" alt="GitHub stars"></a>
-  <a href="#architecture"><img src="https://img.shields.io/badge/layers-16-2ea44f.svg" alt="Layers"></a>
+  <a href="#architecture"><img src="https://img.shields.io/badge/layers-17-2ea44f.svg" alt="Layers"></a>
   <a href="#endpoints"><img src="https://img.shields.io/badge/endpoints-50%2B-2ea44f.svg" alt="Endpoints"></a>
-  <a href="#data-sources"><img src="https://img.shields.io/badge/sources-17-2ea44f.svg" alt="Sources"></a>
+  <a href="#data-sources"><img src="https://img.shields.io/badge/sources-18-2ea44f.svg" alt="Sources"></a>
   <a href="#data-sources"><img src="https://img.shields.io/badge/auth-zero-success.svg" alt="Zero-Auth"></a>
 </p>
 
@@ -28,13 +28,15 @@
   <a href="#faq">FAQ</a>
 </p>
 
-> **Full-stack market data for US equities** — 16 layers · 50+ endpoints · 17 sources · zero-auth · only `requests`.
+> **Full-stack market data for US equities** — 17 layers · 50+ endpoints · 18 sources · zero-auth · only `requests`.
 >
 > **Official-source-first (V2.0):** CBOE options with full Greeks + **0DTE** flow, FINRA market-wide short volume, SEC EDGAR filing stream + a free market-wide screener, Treasury / CFTC / earnings calendar. **Every source is labeled with its compliance tier, terms quoted verbatim** — "official" does not mean "free to use".
 >
 > **New in V2.1:** a global rates & FX layer — policy rates for 38 central banks (BIS), ECB FX / key rates / euro-area yield curve, NY Fed SOFR / EFFR, Fed H.10 FX / H.6 money stock, and US Treasury auctions + federal debt, all tier S. Yahoo K-line now returns true full-history daily bars in exchange-local dates, builds weekly / monthly / quarterly bars from daily data, and works for Japan / Taiwan / Korea / India / Europe and more.
 >
 > **New in V2.2:** CBOE volatility indices (VIX since 1990) and the VIX term structure, FINRA short interest (twice a month, with days to cover), SEC Form 4 insider trades line by line and 13F institutional holdings, the Taiwan Stock Exchange / TPEx official open APIs (latest Taiwan quotes, P/E, monthly revenue; commercial use OK), and US EIA weekly crude oil / natural gas inventories plus spot prices (spot prices are tier B, see Compliance tiers).
+>
+> **New in V2.3:** a US macro layer — the US Bureau of Labor Statistics' registration-free public API: 23 common indicators in one request, including CPI / core CPI, nonfarm payrolls, the unemployment rate, average hourly earnings, PPI, JOLTS job openings, import prices, the Employment Cost Index and labor productivity, with month-over-month and year-over-year changes computed locally, the official release schedule and each indicator's revision rules; plus the Department of Labor's weekly initial / continued jobless claims (since 1967). All tier S; cite the source and the retrieval date.
 
 A single self-contained Skill file that turns raw US stock data — scattered across many sources — into a toolkit an AI coding assistant can call directly. You no longer memorize Eastmoney secid prefixes, Yahoo crumb auth flows, or SEC EDGAR CIK mappings. That's all handled.
 
@@ -48,7 +50,7 @@ A single self-contained Skill file that turns raw US stock data — scattered ac
 ## Architecture
 
 ```
-US Full-Stack Data · 16-layer architecture · V2.2
+US Full-Stack Data · 17-layer architecture · V2.3
 │
 ├── Market Data      Sina + Tencent + Eastmoney push2        Real-time quotes, 25-78 fields
 ├── K-line           Sina(back to 1984) + Yahoo chart        Daily / weekly / monthly / minute; JP/TW/KR/IN/EU via suffix
@@ -75,22 +77,25 @@ US Full-Stack Data · 16-layer architecture · V2.2
 ├── Insiders / 13F   SEC Form 4 + 13F             ⭐ insider trades (price/shares/10b5-1 box on the filing) + quarterly institutional holdings
 ├── Taiwan           TWSE + TPEx OpenAPI          ⭐ latest quotes + P/E + monthly revenue + margin for all listed/OTC stocks (commercial OK)
 └── Energy           US EIA                       ⭐ weekly crude/gas inventories + WTI (since 1986)/Brent/Henry Hub daily spot prices (tier B)
+
+━━━ New in V2.3 ━━━
+└── US Macro         US Dept. of Labor BLS + ETA  ⭐ CPI/core CPI/payrolls/unemployment/earnings/PPI/JOLTS and more (23 indicators) + release schedule + weekly jobless claims
 ```
 
-> Layer count: the original 8 layers + 5 in V2.0 (the CBOE options chain counts as its own layer) + 1 in V2.1 + 2 in V2.2 (Taiwan, energy). The V2.2 volatility indices, short interest and Form 4 / 13F parsers are new sections inside existing layers and are not counted as layers.
+> Layer count: the original 8 layers + 5 in V2.0 (the CBOE options chain counts as its own layer) + 1 in V2.1 + 2 in V2.2 (Taiwan, energy) + 1 in V2.3 (US macro). The V2.2 volatility indices, short interest and Form 4 / 13F parsers are new sections inside existing layers and are not counted as layers.
 
 ---
 
 ## Compliance tiers
 
-Source terms differ a lot. **"Official" does not mean "free to use".** These tiers come from reading each source's actual terms of service (2026-07-24; Yahoo / Nasdaq re-checked and 4 new official sources read on 2026-10-11; TWSE / TPEx and EIA read on 2026-10-12). Quotes are verbatim.
+Source terms differ a lot. **"Official" does not mean "free to use".** These tiers come from reading each source's actual terms of service (2026-07-24; Yahoo / Nasdaq re-checked and 4 new official sources read on 2026-10-11; TWSE / TPEx and EIA read on 2026-10-12; the US Bureau of Labor Statistics and Department of Labor read on 2026-11-02). Quotes are verbatim.
 
 <table>
 <thead>
 <tr><th nowrap>Tier</th><th nowrap>Commercial</th><th nowrap>Redistribute</th><th>Sources</th><th>Basis (quoted)</th></tr>
 </thead>
 <tbody>
-<tr><td nowrap><strong>S</strong></td><td nowrap>✅</td><td nowrap>✅</td><td>SEC EDGAR / Treasury / CFTC / Federal Reserve Board / NY Fed / BIS / ECB / EIA (inventories) / TWSE / TPEx</td><td>EDGAR: <em>&quot;Anyone can access and download this information <strong>for free</strong>&quot;</em>, <em>&quot;We <strong>allow scripted access</strong>&quot;</em> — hard limit <strong>10 req/s</strong>, User-Agent required. Fed Board: <em>&quot;public domain&quot;</em>. NY Fed: <em>&quot;personal or business purposes&quot;</em>, <em>&quot;through an automated process&quot;</em>. BIS: <em>&quot;unrestricted&quot;</em>. ECB: <em>&quot;reused free of charge&quot;</em>. EIA's own data: <em>&quot;public domain&quot;</em>. TWSE / TPEx: all 13 datasets we use are registered on Taiwan's government open data platform under the Open Government Data License, which allows use for any purpose, non-exclusive, irrevocable and royalty-free; both OpenAPI pages say they welcome integration, and the intellectual-property section of both sites' terms exempts data licensed to the open data platform, while asking that reproductions stay complete, with nothing arbitrarily added or removed (TPEx's OpenAPI page does not link the license and the platform lists web download URLs, so rating it S is this tool's judgment). <strong>BIS / ECB / Fed Board / TWSE / TPEx require attribution, ECB data must not be modified, and NY Fed reference rates need its notice when shown to others</strong></td></tr>
+<tr><td nowrap><strong>S</strong></td><td nowrap>✅</td><td nowrap>✅</td><td>SEC EDGAR / Treasury / CFTC / Federal Reserve Board / NY Fed / BIS / ECB / EIA (inventories) / TWSE / TPEx / US Dept. of Labor (BLS / ETA)</td><td>EDGAR: <em>&quot;Anyone can access and download this information <strong>for free</strong>&quot;</em>, <em>&quot;We <strong>allow scripted access</strong>&quot;</em> — hard limit <strong>10 req/s</strong>, User-Agent required. Fed Board: <em>&quot;public domain&quot;</em>. NY Fed: <em>&quot;personal or business purposes&quot;</em>, <em>&quot;through an automated process&quot;</em>. BIS: <em>&quot;unrestricted&quot;</em>. ECB: <em>&quot;reused free of charge&quot;</em>. EIA's own data: <em>&quot;public domain&quot;</em>. TWSE / TPEx: all 13 datasets we use are registered on Taiwan's government open data platform under the Open Government Data License, which allows use for any purpose, non-exclusive, irrevocable and royalty-free; both OpenAPI pages say they welcome integration, and the intellectual-property section of both sites' terms exempts data licensed to the open data platform, while asking that reproductions stay complete, with nothing arbitrarily added or removed (TPEx's OpenAPI page does not link the license and the platform lists web download URLs, so rating it S is this tool's judgment). BLS: <em>&quot;public domain&quot;</em>; its API terms ask users to cite the retrieval date and state <em>&quot;BLS.gov cannot vouch for the data or analyses derived from these data after the data have been retrieved from BLS.gov.&quot;</em> The key-free tier allows 25 requests a day, and trying to get around the limits can get you blocked. Department of Labor: <em>&quot;public domain&quot;</em>, without implying any affiliation with or endorsement by the DOL. <strong>BIS / ECB / Fed Board / TWSE / TPEx / BLS require attribution (BLS also the retrieval date), ECB data must not be modified, and NY Fed reference rates need its notice when shown to others</strong></td></tr>
 <tr><td nowrap><strong>B</strong></td><td nowrap>⚠️ verify first</td><td nowrap>❌</td><td>FINRA / EIA spot prices</td><td>FINRA files (daily short volume, short interest) are published for download, but terms prohibit <em>&quot;data mining, scraping or harvesting tools (including robots)&quot;</em> and state <em>&quot;<strong>non-commercial use</strong>&quot;</em>. EIA's WTI / Brent / Henry Hub spot prices are sourced from <em>&quot;Refinitiv, an LSEG business&quot;</em>; reproducing third-party material beyond fair use needs the copyright owner's written permission (tier B is this tool's judgment)</td></tr>
 <tr><td nowrap><strong>C</strong></td><td nowrap>❌ needs permission</td><td nowrap>❌</td><td>CBOE / Eastmoney / Sina / Tencent</td><td>CBOE (options chains and volatility indices) requires <em>&quot;<strong>approval in advance</strong>&quot;</em> + <em>&quot;<strong>execution of a license agreement</strong>&quot;</em>; Eastmoney / Sina / Tencent are website front-end endpoints, personal research only</td></tr>
 <tr><td nowrap><strong>D</strong></td><td nowrap>❌</td><td nowrap>❌</td><td>Yahoo / Nasdaq</td><td>Terms prohibit automated access without permission. Yahoo: <em>&quot;using any automated means… for any purpose without our express, prior permission&quot;</em>. Nasdaq: <em>&quot;any process, whether automated or manual, to capture data… for any reason&quot;</em>. <strong>Personal study and research only, at your own risk; no commercial use or redistribution</strong></td></tr>
@@ -122,7 +127,7 @@ pip install requests
 pip install tzdata
 ```
 
-⚠️ **Before using the SEC layers, set `SEC_CONTACT` in SKILL.md to your real name and email.** SEC requires a declared User-Agent; requests without one are rejected as an *Undeclared Automated Tool*. The code raises a clear error if you forget.
+⚠️ **Before using the SEC or US macro (BLS) layers, set `SEC_CONTACT` in SKILL.md to your real name and email.** SEC requires a declared User-Agent; requests without one are rejected as an *Undeclared Automated Tool*, and the BLS website returns 403. The code raises a clear error if you forget.
 
 Launch Claude Code and say "check AAPL's financials" — the skill activates on its own. **Codex / OpenClaw users:** paste SKILL.md into your system prompt or project context file; the embedded Python runs as-is.
 
@@ -145,6 +150,8 @@ Launch Claude Code and say "check AAPL's financials" — the skill activates on 
 **Taiwan ⭐ (V2.2)** — TWSE + TPEx official open APIs: the latest trading day's quotes, P/E / dividend yield / P/B, monthly revenue, company profiles, margin trading, ex-dividend notices and dividends for every listed and OTC stock (latest day only; for Taiwan K-line history use Yahoo `.TW` / `.TWO`).
 
 **Energy ⭐ (V2.2)** — EIA weekly crude (commercial + SPR), gasoline, distillate and natural gas inventories · WTI (since 1986) / Brent / Henry Hub daily spot prices (tier B: third-party data republished by EIA).
+
+**US macro ⭐ (V2.3)** — US Bureau of Labor Statistics: CPI / core CPI (seasonally adjusted and not), shelter, CPI-W, chained CPI, unemployment rate, U-6, participation rate, nonfarm payrolls, average hourly earnings, PPI and core PPI, JOLTS openings and quits rate, import prices, the Employment Cost Index, labor productivity, or any BLS series ID · the latest period's MoM / YoY change and next release date · the official BLS release schedule · Department of Labor weekly initial / continued jobless claims (since 1967). The key-free tier allows 25 requests a day; identical requests are reused for an hour.
 
 **Tools** — stock search (CN+EN) · full-market list (US 5925+ / HK 18000+) · news by ticker · ticker↔CIK.
 
@@ -220,6 +227,16 @@ Launch Claude Code and say "check AAPL's financials" — the skill activates on 
 | EIA `energy_prices()` | WTI (since 1986) / Brent (since 1987) crude spot, USD per barrel; Henry Hub natural gas (since 1997). Tier B: prices come from Refinitiv, verify before commercial use or redistribution |
 | EIA `energy_inventories()` | Weekly crude (commercial + SPR), gasoline, distillate and other stocks; Lower 48 and regional natural gas storage vs the 5-year average |
 
+### US macro ⭐ (V2.3)
+
+| Endpoint | Data |
+|----------|------|
+| BLS `us_macro()` | 23 common indicators in one request: CPI / core CPI (SA and NSA), shelter, CPI-W, chained CPI, unemployment rate, U-6, participation rate, employment-population ratio, nonfarm payrolls, average hourly earnings, average weekly hours, PPI and core PPI, JOLTS openings and quits rate, import prices, ECI 12-month change, labor productivity |
+| BLS `us_macro_latest()` | Latest, previous and year-ago values per indicator, MoM / YoY computed locally, plus the next release date |
+| BLS `bls_series()` | Any BLS series ID; requests over 25 series or 10 years are split automatically |
+| BLS `bls_release_calendar()` | Official release schedule: date and Eastern time of every CPI / Employment Situation / PPI / JOLTS release and more |
+| Dept. of Labor `us_jobless_claims()` | Weekly initial and continued claims (SA / NSA / 4-week average) and the insured unemployment rate, since 1967 |
+
 ### Price / value / flow / tools
 
 | Endpoint | Data |
@@ -231,7 +248,7 @@ Launch Claude Code and say "check AAPL's financials" — the skill activates on 
 | Eastmoney push2his | Daily main/large/medium/small fund flow |
 | Eastmoney search / push2 list / Yahoo search / SEC CIK | Search / full-market list / news / ticker↔CIK |
 
-Every source is free, no API key. Yahoo crumb is auto-managed; SEC EDGAR only needs a declared User-Agent.
+Every source is free, no API key. Yahoo crumb is auto-managed; SEC EDGAR and BLS only need a declared User-Agent (the key-free BLS tier allows 25 requests a day).
 
 </details>
 
@@ -257,6 +274,7 @@ Just tell your AI assistant:
 | FX / Treasuries ⭐ | "EUR/JPY this month" · "Next week's Treasury auction schedule" |
 | Taiwan ⭐ | "TSMC's latest close and P/E" · "This month's revenue for OTC-listed stocks" |
 | Oil / gas ⭐ | "This week's EIA crude inventories" · "WTI over the past year" |
+| US macro ⭐ | "Latest CPI and core CPI year over year, and when's the next release?" · "Initial jobless claims over the last few weeks" |
 | Other markets | "Toyota 7203.T daily K-line for the past year" · "TSMC 2330.TW full history" |
 | US / HK quote | "AAPL's price and PE" · "How's Tencent 00700 today" |
 | K-line | "Pull TSLA's daily K-line for the past 6 months" |
@@ -279,6 +297,7 @@ Just tell your AI assistant:
 | **BIS** | **S** | none | **Central-bank policy rates** (attribution) |
 | **ECB** | **S** | none | **EUR FX / ECB key rates / euro-area yield curve** (attribution, no modification) |
 | **US EIA** | **S** / B | none | **Weekly crude oil / natural gas inventories** (S, attribution recommended) · WTI / Brent / Henry Hub spot prices (B: Refinitiv data republished by EIA, verify before commercial use) |
+| **US Department of Labor** (BLS + ETA) | **S** | real UA | **CPI / payrolls / unemployment / PPI / JOLTS / import prices / ECI / productivity** · **release schedule** · **weekly jobless claims** (cite source and retrieval date; key-free tier: 25 requests a day) |
 | **Taiwan Stock Exchange** | **S** | none | Listed stocks' **latest quotes / P/E / monthly revenue / margin / ex-dividend / dividends** (attribution) |
 | **TPEx** | **S** | none | OTC stocks' **latest quotes / P/E / monthly revenue / margin / ex-dividend** (attribution; S is this tool's judgment) |
 | **FINRA** | **B** | none | US **market-wide daily short volume** · **short interest** (verify before commercial use) |
@@ -315,6 +334,12 @@ ECB and NY Fed update every business day; Fed H.10 is published each Monday for 
 
 **Q: How often is short interest updated?**
 FINRA publishes it twice a month, for settlement dates on the 15th and at month-end (moved earlier for holidays), about 8 business days after settlement. The daily dataset is a different one — daily short volume (9.1), which counts that day's short-sale trades, not open short positions.
+
+**Q: Are there limits on the US macro data? Does it get revised?**
+The registration-free BLS API allows 25 requests a day, up to 25 series and 10 years per request; `us_macro()` gets all 23 indicators in one request, and identical requests are reused for an hour. Payrolls, PPI, JOLTS and others are revised after release, and the API returns the latest revised values, not what was first published. When replaying history, line data up with the real release dates from `bls_release_calendar()`. Each indicator's revision rules are in section 16.5 of SKILL.md.
+
+**Q: Why no GDP?**
+GDP comes from the Bureau of Economic Analysis, whose API needs a registered key. This project does not use sources that require an account or a key.
 
 **Q: Running from a server in mainland China — can it reach Yahoo / SEC?**
 They're overseas and may be flaky on a direct connection. Use a proxy, or lean on the Eastmoney / Sina / Tencent sources.

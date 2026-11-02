@@ -1,5 +1,61 @@
 # Changelog
 
+## v2.3.0 — 2026-11-02
+
+十七层架构 · 50+ 个端点 · 18 个数据源（v2.2.0 为十六层 · 50+ · 17）。
+新增 5 个入口、1 层（Layer 16 美国宏观）、1 家来源（美国劳工部：劳工统计局 BLS 与就业与培训局 ETA 同属劳工部，按一家计，同财政部的收益率曲线与 FiscalData）。不新增依赖。
+
+### 新增：Layer 16 美国宏观（美国劳工部，S 级）
+
+| 入口 | 内容 |
+|---|---|
+| `bls_series(series_ids, start_year, end_year, max_queries)` | BLS 公共 API v1 任意序列号；超过 25 个序列或 10 年自动拆成多次请求，按计划超过 `max_queries`（默认 5）在联网前报错 |
+| `us_macro(indicators, start_year, end_year)` | 23 个常用指标一次请求取齐：CPI / 核心 CPI（季调与未季调）、住房分项、CPI-W、链式 CPI、失业率、U-6、劳动参与率、就业人口比、非农、平均时薪、平均周工时、PPI 最终需求与核心 PPI（季调与未季调）、JOLTS 职位空缺与离职率、进口价格、ECI 同比、劳动生产率；每个带中文说明、单位、是否季调、对应的发布名称 |
+| `us_macro_latest(indicators)` | 各指标最新一期、上一期、去年同期，本地算环比 / 同比（v1 不给变化率），附下次发布日期 |
+| `bls_release_calendar(release, start, end)` | BLS 官网发布日程：每次发布的日期和美东时间 |
+| `us_jobless_claims(start_year, end_year)` | 劳工部每周初请、续请失业金（季调 / 未季调 / 四周均值）、保险失业率，1967 年起 |
+
+用的是 BLS 免注册的 API v1；v2 要注册 key，BEA（GDP）、人口普查局、FRED 也都要 key，按项目规则不接。
+23 个序列号逐个实测、名称照 data.bls.gov 的序列说明页核对。SKILL.md 新增 16.5 节：各发布的时间、修订规则（原文摘录），以及用 API 回放历史时怎么避免偷看未来。
+
+处理过的坑：
+- 免 key 版超限不报错：超过 10 年、25 个序列的部分**直接被删掉**，状态照样是成功，只在提示里写一句 *"has been reduced to the system-allowed limit"*。所以本地自己拆请求，万一还收到这句就报 `RuntimeError`，不返回残缺数据
+- 每天只有 25 次：同一请求 1 小时内复用结果（返回副本），按计划要超过 `max_queries` 就在联网前报 `ValueError`
+- 序列号写错时状态仍是成功、数据为空，只在提示里写 *"Series does not exist for Series …"*：识别出来报 `DataNotAvailable`
+- 起点之前的年份每年一条 *"No Data Available …"*：压成一句写进 `notes`（如「LNS14000000 没有 1945–1947 年的数据」）
+- 2025 年政府停摆：10 月 CPI 等写成 "-"、带脚注，返回 `value=None`；有的序列（如进口价格）那一期整行没有，`rows` 里就没有这一期；9 月 CPI 推迟到 2025-10-24 才发，回放历史要按日程里的真实日期对齐
+- 年均值（M13 / Q05 / S03）跳过；季度期次写成 `2026-Q3`；认不出的期次报 `RuntimeError`
+- 上一期、去年同期按期次找，不按位置（停摆缺月时按位置会错位），那一期缺行或是 "-" 都给 `None`；某个指标一个数都没有时，返回行的字段照样给全、都是 `None`
+- 不把接口异常当成「没数据」：BLS 说成功却漏回序列或格式不对、日程返回的不是日历或有读不懂的事件、申领文件里有读不懂的日期或数字、本层固定地址返回 404，都报 `RuntimeError`，BLS 的结果也不缓存
+- 取数日期 `retrieved` 是实际联网那天，缓存跨过午夜也不改；`us_macro_latest()` 找下次发布按美东日期（复用 Layer 6 的 `_et_today()`，分得清冬夏令时）
+- bls.gov 不带联系方式的程序一律 403：通用出口 `official_get` 对 bls.gov 也带 `SEC_CONTACT`，并给出 403 提示；`official_get` 新增 `data` / `json_body`，给了就发 POST
+- 日程按名称筛：名称在整份日程里有完全一致的就只取这一份（"Employment Situation" 不带上 "Employment Situation of Veterans"，限定日期时也一样），否则按包含筛
+- 劳工部申领文件比每周四的新闻稿晚：2026-11-02 实测文件最新完整一周是 10-03，新闻稿已发到 10-24；官方页面挂着数据库技术问题的通知，当天下午还碰到过对方数据库连不上（返回 200 和一句 *"Unable to connect!"*），这种情况报 `RuntimeError` 并带上原话。文件里未来的周只有季节因子，不返回
+
+### 合规分级
+
+新读条款原文（2026-11-02）：
+- **BLS** → S 级：版权页 *"everything that we publish… is in the public domain… although we do ask that you cite the Bureau of Labor Statistics as the source."*；
+  API 使用条款要求注明取数日期，并声明 *"BLS.gov cannot vouch for the data or analyses derived from these data after the data have been retrieved from BLS.gov."*，
+  不得改动内容后仍称来源是 BLS，徽标不得使用；试图绕开限额可能被封。返回值带 `retrieved`（取数日期）和 `citation`（照抄即可的引用声明）
+- **劳工部 ETA** → S 级：*"Materials created by the federal government are generally part of the public domain and may be used, reproduced and distributed without permission."* 不得暗示与劳工部有关联或受其认可
+
+### 测试
+
+- Python 3.9.6 实测（2026-11-02），代码直接从 SKILL.md 抽出来跑，共 137 项：离线 92 项（参数检查 + 用存下的真实响应重放、再故意改坏），BLS 联网 33 项，日程和申领联网 12 项。修复后为省每天 25 次的额度，BLS 联网只重跑其中 25 项（1 次请求），其余 8 项改动过的代码由离线重放覆盖：
+  - 免 key 版限制：每天 25 次、每次 25 个序列、10 年，与官方 FAQ 一致；超出部分被静默删掉（21 年只返回前 10 年、26 个序列只返回前 25 个）
+  - `us_macro()` 一次请求取齐 23 个指标；`us_macro_latest()` 和 BLS 新闻稿逐项一致：2026 年 9 月 CPI 季调环比 0.6%、未季调同比 3.7%，PPI 季调环比 1.3%、未季调同比 6.3%，进口价格环比 1.1%、同比 8.1%，非农新增 2.9 万、失业率 4.2%；8 月职位空缺 7,079 千；三季度 ECI 同比 3.4%；二季度生产率 1.4%
+  - 下次发布：CPI 2026-11-10 08:30、就业报告 11-06、JOLTS 11-03 10:00、生产率 11-05；ECI 当前日程里没有下一次，返回 `None`
+  - CPI-U 未季调 2000–2026 拆 3 次请求拼出 321 个月；第二次取同一请求走缓存（0 次）；小写序列号转大写后命中同一缓存
+  - 序列号写错、起点之前的年份返回 `DataNotAvailable`；部分年份没数写进 `notes`；BLS 拒绝的参数报 `ValueError`
+  - 日程：2026 年 CPI 12 次发布日期与官网一致；2025 年停摆后的 9 月 CPI 在 10-24
+  - 申领：1967-01-07 至 2026-10-03 共 3,118 周（2.8 秒）；2026-10-03 当周初请季调 198,000、四周均值 198,250、续请 1,703,000、保险失业率 1.1%，与劳工部 10-29 新闻稿一致
+  - 参数检查 22 项（空列表、非法序列号、年份越界或是小数、布尔、`max_queries` 越界、拆分后超过 `max_queries` 或超过每天 25 次、未知指标、日期格式、不存在的日期、申领 1966 年、`start` 晚于 `end`）都在联网前报 `ValueError`；`SEC_CONTACT` 没改报 `RuntimeError`；不带邮箱的 User-Agent 被 BLS 403 时给出提示
+  - 原有 SEC、财政部、EIA、纽约联储入口抽查，`official_get` 的 GET 路径不变
+- 独立审查（Codex GPT-6.1 Sol）首审 10 条：BLS 残缺响应会被缓存、申领坏日期会悄悄丢周和坏数字变成空值（P1 两条）；日程在限定日期时「完全一致优先」失效、无效日程当成没发布、新地址 404 当成没数据、美东日期固定 UTC−5、缓存跨午夜改写取数日期、「修订数据让回测更好」说过头（P2 六条）；无有效数值时字段不全、更新日志把缺行和空值混为一谈（P3 两条）。全部修复，每条都有离线复现
+- 修复部分复核两次（只审补丁）：第一次指出 3 条没修全（重复序列号会覆盖数据、千分位先去逗号再校验能绕过、截断日程和不存在的日期时间仍被接受），改成按结构整体校验后，第二次复核没有发现问题；真实的 25 序列响应、313 条日程、6 份申领 XML 的 30,510 个数值都没有被误拒
+- 还没验证到的：BLS 每天 25 次用完时的真实返回（两种可能的写法都离线测过，都报 `RuntimeError`）
+
 ## v2.2.0 — 2026-10-12
 
 十六层架构 · 50+ 个端点 · 17 个数据源（v2.1.0 为十四层 · 40+ · 14）。

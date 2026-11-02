@@ -4,16 +4,16 @@
 
 <p align="center">
   <b>给 AI 编程助手用的美股数据工具包</b><br>
-  期权希腊字母 · 0DTE 流 · VIX 期限结构 · SEC 申报与内部人交易 · 做空数据 · 基本面 · 全市场筛选 · 全球利率汇率 · 台股 · 能源
+  期权希腊字母 · 0DTE 流 · VIX 期限结构 · SEC 申报与内部人交易 · 做空数据 · 基本面 · 全市场筛选 · 全球利率汇率 · 台股 · 能源 · 美国宏观
 </p>
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License: Apache 2.0"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.9+-3776AB?logo=python&logoColor=white" alt="Python 3.9+"></a>
   <a href="https://github.com/simonlin1212/global-stock-data/stargazers"><img src="https://img.shields.io/github/stars/simonlin1212/global-stock-data?style=social" alt="GitHub stars"></a>
-  <a href="#架构"><img src="https://img.shields.io/badge/层数-16-2ea44f.svg" alt="层数"></a>
+  <a href="#架构"><img src="https://img.shields.io/badge/层数-17-2ea44f.svg" alt="层数"></a>
   <a href="#端点"><img src="https://img.shields.io/badge/端点-50%2B-2ea44f.svg" alt="端点"></a>
-  <a href="#数据源"><img src="https://img.shields.io/badge/数据源-17-2ea44f.svg" alt="数据源"></a>
+  <a href="#数据源"><img src="https://img.shields.io/badge/数据源-18-2ea44f.svg" alt="数据源"></a>
   <a href="#数据源"><img src="https://img.shields.io/badge/鉴权-零-success.svg" alt="零鉴权"></a>
 </p>
 
@@ -26,13 +26,15 @@
   <a href="#faq">FAQ</a>
 </p>
 
-> **给 AI 编程助手用的美股全栈数据工具包** — 16 层架构 · 50+ 个端点 · 17 个数据源 · 全部零鉴权 · 仅依赖 `requests`。
+> **给 AI 编程助手用的美股全栈数据工具包** — 17 层架构 · 50+ 个端点 · 18 个数据源 · 全部零鉴权 · 仅依赖 `requests`。
 >
 > **官方源优先（V2.0）：** CBOE 官方期权链（完整希腊字母 + **0DTE** 异动 flow）、FINRA 全市场每日空头成交量、SEC EDGAR 申报事件流 + 免费全市场 screener、美债收益率曲线 / CFTC COT / 财报日历。**每个数据源标注了合规级别与条款原文**——因为"官方"不等于"可自由使用"。
 >
 > **V2.1 新增：** 全球利率汇率层——BIS 38 家央行政策利率、欧洲央行汇率 / 利率 / 欧元区收益率曲线、纽约联储 SOFR / EFFR、美联储 H.10 汇率 / H.6 M2、美国财政部国债拍卖与联邦债务，全部官方 S 级。Yahoo K 线修复全历史日线与时区问题，周 / 月 / 季线改由日线合并，并可直接取日本 / 台湾 / 韩国 / 印度 / 欧洲等市场。
 >
 > **V2.2 新增：** CBOE 波动率指数（VIX 1990 年起）与 VIX 期限结构、FINRA 做空余额（每月两期，含回补天数）、SEC Form 4 内部人逐笔买卖与 13F 机构持仓明细、台湾证交所 / 柜买中心官方开放接口（台股最新行情、本益比、月营收，可商用）、美国能源信息署 EIA 原油 / 天然气每周库存与现货价格（现货价为 B 级，见合规分级）。
+>
+> **V2.3 新增：** 美国宏观层——美国劳工统计局 BLS 免注册的公共接口：CPI / 核心 CPI、非农、失业率、平均时薪、PPI、JOLTS 职位空缺、进口价格、雇佣成本指数、劳动生产率等 23 个常用指标一次取齐，本地算环比 / 同比，附官方发布日程和每个指标的修订规则；另有劳工部每周初请 / 续请失业金（1967 年起）。全部 S 级，须注明来源与取数日期。
 
 一个自包含的 Skill 文件，把分散在多个数据源里的美股/港股原始数据，整合成 AI 编程助手直接能用的工具集。你不用再背东财 secid 前缀、Yahoo crumb 鉴权流程、SEC EDGAR 的 CIK 映射——全部封装好了。
 
@@ -46,7 +48,7 @@
 ## 架构
 
 ```
-美股全栈数据 · 16 层架构 · V2.2
+美股全栈数据 · 17 层架构 · V2.3
 │
 ├── 行情层      新浪 + 腾讯 + 东财push2        实时报价 25-78 字段
 ├── K线层      新浪(回溯至1984) + Yahoo         日/周/月/分钟；日/台/韩/印/欧等市场换后缀
@@ -73,22 +75,25 @@
 ├── 内部人/13F  SEC Form 4 + 13F          ⭐ 内部人逐笔买卖(价格/股数/申报是否勾10b5-1) + 机构季度持仓明细
 ├── 台股        证交所 + 柜买中心 OpenAPI  ⭐ 上市/上柜全市场最新行情 + 本益比 + 月营收 + 融资融券（可商用）
 └── 能源        美国能源信息署 EIA         ⭐ 原油/天然气每周库存 + WTI(1986起)/布伦特/Henry Hub 现货日价(B级)
+
+━━━ V2.3 新增 ━━━
+└── 美国宏观    美国劳工部 BLS + ETA       ⭐ CPI/核心CPI/非农/失业率/时薪/PPI/JOLTS 等 23 个指标 + 官方发布日程 + 每周初请/续请失业金
 ```
 
-> 层数按「原有八层 + V2.0 五层（CBOE 期权链单算一层）+ V2.1 一层 + V2.2 两层（台股、能源）」计；V2.2 的波动率指数、做空余额、Form 4 / 13F 解析是原有层里的新小节，不另计层。
+> 层数按「原有八层 + V2.0 五层（CBOE 期权链单算一层）+ V2.1 一层 + V2.2 两层（台股、能源）+ V2.3 一层（美国宏观）」计；V2.2 的波动率指数、做空余额、Form 4 / 13F 解析是原有层里的新小节，不另计层。
 
 ---
 
 ## 合规分级
 
-各源条款差异极大，**"官方"不等于"可自由使用"**。以下结论来自逐家实读条款原文（2026-07-24；2026-10-11 复核 Yahoo / Nasdaq 并新读 4 家官方源；2026-10-12 新读台湾证交所 / 柜买中心与 EIA），引号内为原文：
+各源条款差异极大，**"官方"不等于"可自由使用"**。以下结论来自逐家实读条款原文（2026-07-24；2026-10-11 复核 Yahoo / Nasdaq 并新读 4 家官方源；2026-10-12 新读台湾证交所 / 柜买中心与 EIA；2026-11-02 新读美国劳工统计局 BLS 与劳工部），引号内为原文：
 
 <table>
 <thead>
 <tr><th nowrap>级别</th><th nowrap>可商用</th><th nowrap>可再分发</th><th>源</th><th>依据（原文摘录）</th></tr>
 </thead>
 <tbody>
-<tr><td nowrap><strong>S</strong></td><td nowrap>✅</td><td nowrap>✅</td><td>SEC EDGAR / Treasury / CFTC / 美联储 / 纽约联储 / BIS / 欧洲央行 / EIA（库存） / 台湾证交所 / 柜买中心</td><td>EDGAR 明示 <em>&quot;for free&quot;</em>、<em>&quot;allow scripted access&quot;</em>，<strong>硬上限 10 请求/秒</strong>，须声明 User-Agent；美联储 <em>&quot;public domain&quot;</em>；纽约联储允许 <em>&quot;personal or business purposes&quot;</em>、<em>&quot;through an automated process&quot;</em>；BIS <em>&quot;unrestricted&quot;</em>；ECB <em>&quot;reused free of charge&quot;</em>；EIA 自己的数据 <em>&quot;public domain&quot;</em>；台湾两家用到的 13 个数据集都登记在政府资料开放平台，适用《政府资料开放授权条款》<em>「不限目的、時間及地域、非專屬、不可撤回、免授權金」</em>，两家 OpenAPI 说明页写 <em>「歡迎各位介接使用」</em>；网站条款的知识产权一节写明授权给开放平台的资料 <em>「不在此限」</em>，转载时须保持完整、<em>「不得任意增刪」</em>（柜买中心的 OpenAPI 页没有链接授权条款，平台上登记的是网页下载地址，归 S 级是本工具的判断）。<strong>BIS / ECB / 美联储 / 台湾两家须注明来源，ECB 不得改动数据，纽约联储参考利率对外展示须附其声明</strong></td></tr>
+<tr><td nowrap><strong>S</strong></td><td nowrap>✅</td><td nowrap>✅</td><td>SEC EDGAR / Treasury / CFTC / 美联储 / 纽约联储 / BIS / 欧洲央行 / EIA（库存） / 台湾证交所 / 柜买中心 / 美国劳工部（BLS / ETA）</td><td>EDGAR 明示 <em>&quot;for free&quot;</em>、<em>&quot;allow scripted access&quot;</em>，<strong>硬上限 10 请求/秒</strong>，须声明 User-Agent；美联储 <em>&quot;public domain&quot;</em>；纽约联储允许 <em>&quot;personal or business purposes&quot;</em>、<em>&quot;through an automated process&quot;</em>；BIS <em>&quot;unrestricted&quot;</em>；ECB <em>&quot;reused free of charge&quot;</em>；EIA 自己的数据 <em>&quot;public domain&quot;</em>；台湾两家用到的 13 个数据集都登记在政府资料开放平台，适用《政府资料开放授权条款》<em>「不限目的、時間及地域、非專屬、不可撤回、免授權金」</em>，两家 OpenAPI 说明页写 <em>「歡迎各位介接使用」</em>；网站条款的知识产权一节写明授权给开放平台的资料 <em>「不在此限」</em>，转载时须保持完整、<em>「不得任意增刪」</em>（柜买中心的 OpenAPI 页没有链接授权条款，平台上登记的是网页下载地址，归 S 级是本工具的判断）；BLS <em>&quot;public domain&quot;</em>，API 条款要求注明取数日期并声明 <em>&quot;BLS.gov cannot vouch for the data or analyses derived from these data after the data have been retrieved from BLS.gov.&quot;</em>，免 key 版每天 25 次、试图绕开可能被封；劳工部 <em>&quot;public domain&quot;</em>，不得暗示与劳工部有关联。<strong>BIS / ECB / 美联储 / 台湾两家 / BLS 须注明来源（BLS 还要注明取数日期），ECB 不得改动数据，纽约联储参考利率对外展示须附其声明</strong></td></tr>
 <tr><td nowrap><strong>B</strong></td><td nowrap>⚠️自行确认</td><td nowrap>❌</td><td>FINRA / EIA 现货价格</td><td>FINRA 数据文件（每日空头成交量、做空余额）主动发布；但条款禁止 <em>&quot;data mining, scraping or harvesting tools&quot;</em>，并声明 <em>&quot;non-commercial use&quot;</em>。EIA 的 WTI / 布伦特 / Henry Hub 现货价来源是 <em>&quot;Refinitiv, an LSEG business&quot;</em>，第三方材料超出合理使用须版权方书面许可（归 B 级是本工具的判断）</td></tr>
 <tr><td nowrap><strong>C</strong></td><td nowrap>❌需授权</td><td nowrap>❌</td><td>CBOE / 东财 / 新浪 / 腾讯</td><td>Cboe（期权链与波动率指数）要求 <em>&quot;approval in advance&quot;</em> + <em>&quot;license agreement&quot;</em>；东财 / 新浪 / 腾讯为站点前端接口，仅个人研究</td></tr>
 <tr><td nowrap><strong>D</strong></td><td nowrap>❌</td><td nowrap>❌</td><td>Yahoo / Nasdaq</td><td>条款禁止未经许可的自动抓取。Yahoo：<em>&quot;using any automated means… for any purpose without our express, prior permission&quot;</em>；Nasdaq：<em>&quot;any process, whether automated or manual, to capture data… for any reason&quot;</em>。<strong>仅供个人学习研究，风险自负，不得商用或再分发</strong></td></tr>
@@ -120,7 +125,7 @@ pip install requests
 pip install tzdata
 ```
 
-⚠️ **用 SEC 相关层之前，先把 SKILL.md 里的 `SEC_CONTACT` 改成你自己的真实姓名和邮箱**，否则 SEC 会把请求当成未声明的自动化工具拒绝。代码在你忘记时会明确报错。
+⚠️ **用 SEC 和美国宏观（BLS）相关层之前，先把 SKILL.md 里的 `SEC_CONTACT` 改成你自己的真实姓名和邮箱**，否则 SEC 会把请求当成未声明的自动化工具拒绝，BLS 网站直接返回 403。代码在你忘记时会明确报错。
 
 启动 Claude Code，说一句「帮我看看 AAPL 的财报」自动激活。**Codex / OpenClaw 用户**把 SKILL.md 内容贴入系统 prompt 或项目上下文文件即可，内嵌 Python 可直接执行。
 
@@ -143,6 +148,8 @@ pip install tzdata
 **台股 ⭐（V2.2）** — 证交所 + 柜买中心官方开放接口：上市 / 上柜全市场最新一个交易日的行情、本益比 / 殖利率 / 股价净值比、月营收、公司基本资料、融资融券、除权除息、股利（只有最新一期；台股历史 K 线用 Yahoo `.TW` / `.TWO`）。
 
 **能源 ⭐（V2.2）** — EIA 原油（商业 + 战略储备）、汽油、馏分油与天然气每周库存 · WTI（1986 起）/ 布伦特 / Henry Hub 现货日价（B 级：EIA 转载的第三方数据）。
+
+**美国宏观 ⭐（V2.3）** — 美国劳工统计局 BLS：CPI / 核心 CPI（季调与未季调）、住房分项、CPI-W、链式 CPI、失业率、U-6、劳动参与率、非农、平均时薪、PPI 与核心 PPI、JOLTS 职位空缺与离职率、进口价格、雇佣成本指数、劳动生产率，或任意 BLS 序列号 · 最新一期的环比 / 同比与下次发布日期 · BLS 官方发布日程 · 劳工部每周初请 / 续请失业金（1967 年起）。免 key 版每天 25 次请求，同一请求 1 小时内复用。
 
 **工具类** — 股票搜索（中英文）· 全市场列表（美股 5925+ / 港股 18000+）· 按代码查新闻 · ticker↔CIK。
 
@@ -218,6 +225,16 @@ pip install tzdata
 | EIA `energy_prices()` | WTI（1986 起）/ 布伦特（1987 起）原油现货，美元/桶；Henry Hub 天然气（1997 起）。B 级：价格来自 Refinitiv，商用或再分发前自行确认 |
 | EIA `energy_inventories()` | 原油（商业 + 战略储备）、汽油、馏分油等每周库存；美国本土及分区天然气储量，含与五年均值对比 |
 
+### 美国宏观 ⭐（V2.3）
+
+| 端点 | 数据 |
+|------|------|
+| BLS `us_macro()` | 23 个常用指标一次请求取齐：CPI / 核心 CPI（季调与未季调）、住房分项、CPI-W、链式 CPI、失业率、U-6、劳动参与率、就业人口比、非农、平均时薪、平均周工时、PPI 与核心 PPI、JOLTS 职位空缺与离职率、进口价格、ECI 同比、劳动生产率 |
+| BLS `us_macro_latest()` | 各指标最新一期、上一期、去年同期，本地算环比 / 同比，附下次发布日期 |
+| BLS `bls_series()` | 任意 BLS 序列号；超过 25 个序列或 10 年自动拆成多次请求 |
+| BLS `bls_release_calendar()` | 官方发布日程：CPI / 就业报告 / PPI / JOLTS 等每次发布的日期和美东时间 |
+| 劳工部 `us_jobless_claims()` | 每周初请、续请失业金（季调 / 未季调 / 四周均值）、保险失业率，1967 年起 |
+
 ### 价格 / 价值 / 资金 / 工具
 
 | 端点 | 数据 |
@@ -229,7 +246,7 @@ pip install tzdata
 | 东财 push2his | 日级主力/大单/中单/小单资金流 |
 | 东财 search / push2 列表 / Yahoo search / SEC CIK | 搜索 / 全市场列表 / 新闻 / ticker↔CIK |
 
-全部数据源免费无 Key。Yahoo crumb 自动管理，SEC EDGAR 仅需声明 User-Agent。
+全部数据源免费无 Key。Yahoo crumb 自动管理，SEC EDGAR 与 BLS 仅需声明 User-Agent（BLS 免 key 版每天 25 次请求）。
 
 </details>
 
@@ -255,6 +272,7 @@ pip install tzdata
 | 汇率 / 美债 ⭐ | 「欧元兑日元这个月走势」·「下周美债拍卖日程」 |
 | 台股 ⭐ | 「台积电最新收盘价和本益比」·「上柜股票这个月营收」 |
 | 原油 / 天然气 ⭐ | 「这周 EIA 原油库存多少」·「WTI 近一年走势」 |
+| 美国宏观 ⭐ | 「最新 CPI 和核心 CPI 同比多少，下次什么时候公布」·「最近几周初请失业金」 |
 | 其他市场 | 「丰田 7203.T 近一年日 K」·「台积电 2330.TW 全部历史」 |
 | 美股/港股行情 | 「AAPL 现在什么价，PE 多少」·「腾讯 00700 今天行情」 |
 | K线 | 「拉 TSLA 最近半年日K线」 |
@@ -280,6 +298,7 @@ pip install tzdata
 <tr><td><strong>BIS</strong></td><td nowrap><strong>S</strong></td><td nowrap>无</td><td><strong>全球央行政策利率</strong>（注明来源）</td></tr>
 <tr><td><strong>欧洲央行</strong></td><td nowrap><strong>S</strong></td><td nowrap>无</td><td><strong>欧元汇率 / ECB 利率 / 欧元区收益率曲线</strong>（注明来源、不得改动）</td></tr>
 <tr><td><strong>美国能源信息署 EIA</strong></td><td nowrap><strong>S</strong> / B</td><td nowrap>无</td><td><strong>原油 / 天然气每周库存</strong>（S，建议注明来源）· WTI / 布伦特 / Henry Hub 现货价格（B：EIA 转载 Refinitiv 数据，商用需自行确认）</td></tr>
+<tr><td><strong>美国劳工部</strong>（劳工统计局 BLS + 就业与培训局 ETA）</td><td nowrap><strong>S</strong></td><td nowrap>需真实UA</td><td><strong>CPI / 非农 / 失业率 / PPI / JOLTS / 进口价格 / ECI / 生产率</strong> · <strong>发布日程</strong> · <strong>每周初请 / 续请失业金</strong>（注明来源与取数日期；免 key 版每天 25 次）</td></tr>
 <tr><td><strong>台湾证交所</strong></td><td nowrap><strong>S</strong></td><td nowrap>无</td><td>上市股票<strong>最新行情 / 本益比 / 月营收 / 融资融券 / 除权息 / 股利</strong>（注明来源）</td></tr>
 <tr><td><strong>柜买中心</strong></td><td nowrap><strong>S</strong></td><td nowrap>无</td><td>上柜股票<strong>最新行情 / 本益比 / 月营收 / 融资融券 / 除权息</strong>（注明来源；S 级为本工具判断）</td></tr>
 <tr><td><strong>FINRA</strong></td><td nowrap><strong>B</strong></td><td nowrap>无</td><td>美股 <strong>全市场每日空头成交量</strong> · <strong>做空余额</strong>（商用需自行确认）</td></tr>
@@ -311,6 +330,10 @@ pip install tzdata
 **全球利率汇率数据多新？** 欧洲央行、纽约联储每个工作日更新；美联储 H.10 每周一发布上一周；BIS 各国有几天到两三周的滞后。所有返回值都带日期，需要当天准确值请查对应央行。
 
 **做空余额多久更新一次？** FINRA 每月两期，结算日是每月 15 日和月末（遇假日提前），文件在结算日之后约 8 个工作日才发布。每天都有的是另一套数据——每日空头成交量（9.1），它统计的是当天的做空成交，不是未平仓的空头。
+
+**美国宏观数据有次数限制吗？会修订吗？** BLS 免注册的接口每天 25 次请求、每次最多 25 个序列和 10 年；`us_macro()` 一次请求就能取齐 23 个指标，同一请求 1 小时内不重复占次数。非农、PPI、JOLTS 等发布后还会修订，接口给的是最新修订值，不是当时第一次公布的数；用来回放历史时按 `bls_release_calendar()` 的真实发布日对齐。各指标的修订规则见 SKILL.md 16.5 节。
+
+**为什么没有 GDP？** GDP 由美国经济分析局 BEA 发布，它的接口要注册 key；按本项目规则，要注册账号或申请 key 的数据源不接。
 
 **国内服务器能访问 Yahoo/SEC 吗？** 境外服务，直连可能不稳，建议走代理或优先用东财/新浪/腾讯。
 
